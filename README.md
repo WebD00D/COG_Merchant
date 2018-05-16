@@ -1,5 +1,5 @@
 # COG Marketplace
 
-## Clone the repo  
-## Run `yarn install`
-## Run `yarn develop`
+## Getting Setup
+- Run `yarn install`
+- Run `yarn develop`
