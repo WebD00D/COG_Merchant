@@ -1,11 +1,11 @@
 import firebase from 'firebase'
 var config = {
-    apiKey: "AIzaSyDLsELzt32MdFPlMgX33petheKIXYevMiI",
-    authDomain: "maya-b3190.firebaseapp.com",
-    databaseURL: "https://maya-b3190.firebaseio.com",
-    projectId: "maya-b3190",
-    storageBucket: "maya-b3190.appspot.com",
-    messagingSenderId: "514349933308"
+  apiKey: "AIzaSyDbLtCnQ9DD8fgT_8WDFhIrzEL7yJdYnm0",
+  authDomain: "cogmerchant.firebaseapp.com",
+  databaseURL: "https://cogmerchant.firebaseio.com",
+  projectId: "cogmerchant",
+  storageBucket: "",
+  messagingSenderId: "456183308424"
   };
 var fire = firebase.initializeApp(config);
 export default fire;

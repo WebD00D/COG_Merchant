@@ -19,11 +19,23 @@ class IndexPage extends PureComponent {
     return (
       <div className="page-container">
         <div className="m-b-100">
-          <h3>COG Components</h3>
+          <h1>COG Components</h1>
+          <p>
+            <b>What' this?</b> Essentially a style guide, but components
+            have full functionality. We're creating the puzzle pieces to
+            the COG Merchant app first, then we'll add display logic, routing, etc.
+          </p>
+          <p>
+            This page should only house working components. While developing,
+            <b> KNOWN Team</b> should use <Link to="/known">this</Link> page
+            to import their WIP components. Christian will use <Link to="/christian">this</Link>
+          </p>
         </div>
         <div>
           <div className="m-b-40">
-            <h4>Menu.js</h4>
+            <code style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+              Menu.js
+            </code>
           </div>
           <div className="mx-w-600">
             <Menu menuId={false} />
