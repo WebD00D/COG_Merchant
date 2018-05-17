@@ -6,7 +6,7 @@ import "../layouts/fcss.css";
 
 import { connect } from "react-redux";
 
-import Menu from "../components/Menu";
+import MenuCategory from "../components/MenuCategory";
 
 class IndexPage extends PureComponent {
   constructor(props) {
@@ -34,11 +34,11 @@ class IndexPage extends PureComponent {
         <div>
           <div className="m-b-40">
             <code style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-              Menu.js
+              MenuCategory.js
             </code>
           </div>
           <div className="mx-w-600">
-            <Menu menuId={false} />
+            <MenuCategory menuId={false} />
           </div>
         </div>
       </div>

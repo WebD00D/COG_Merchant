@@ -14,7 +14,7 @@ import InputField from "./InputField";
 import TextareaField from "./TextareaField";
 import MenuItem from "./MenuItem";
 
-class Menu extends PureComponent {
+class MenuCategory extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -23,6 +23,9 @@ class Menu extends PureComponent {
 
     this.state = {
       showItemForm: false,
+
+      categoryName: "",
+      categoryDescription: "",
 
       newItemName: "",
       newItemDescription: "",
@@ -46,7 +49,8 @@ class Menu extends PureComponent {
           price: "8.99",
           description: "Lorem ipsum dolor sit amet, consectetur."
         }
-      ]
+      ],
+
     };
   }
 
@@ -137,9 +141,9 @@ class Menu extends PureComponent {
             ""
           )}
 
-          <h1 className="fc-purple">Menu Builder</h1>
-          <InputField labelName="Menu Name" inputType="text" />
-          <TextareaField labelName="Menu Description" />
+          <h1 className="fc-purple">Menu Category</h1>
+          <InputField labelName="Category Name" placeholder="Lunch, Happy Hour, etc." inputType="text" />
+          <TextareaField labelName="Category Description" />
           <button
             onClick={() => this._handleShowEditForm()}
             className="bg-red button-secondary"
@@ -167,4 +171,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(MenuCategory);
