@@ -10,7 +10,7 @@ import "whatwg-fetch";
 import "../layouts/fcss.css";
 import "../layouts/components.css";
 
-class MenuItem extends PureComponent {
+class MerchantSettings extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -21,7 +21,7 @@ class MenuItem extends PureComponent {
 
   render() {
     return (
-      <div onClick={ ()=> this.props.editItem() }>
+      <div onClick={ ()=> this.props.showItemDetails() }>
         <div className="menu-list__item">
           <div className="f-16 fc-purple">
             <div>{this.props.itemName}</div>
@@ -47,4 +47,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MenuItem);
+export default connect(mapStateToProps, mapDispatchToProps)(MerchantSettings);

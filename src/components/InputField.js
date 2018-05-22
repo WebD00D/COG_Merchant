@@ -24,7 +24,12 @@ class InputField extends PureComponent {
       <div className="w-100p">
         <div className="input-wrap">
           <label>{this.props.labelName}</label>
-          <input placeholder={ this.props.placeholder || ""}  onChange={ (e) => this.props.setValue(e.target.value) } type={this.props.inputType} />
+          <input
+            defaultValue={this.props.initialValue || ""}
+            placeholder={this.props.placeholder || ""}
+            onChange={e => this.props.setValue(e.target.value)}
+            type={this.props.inputType}
+          />
         </div>
       </div>
     );

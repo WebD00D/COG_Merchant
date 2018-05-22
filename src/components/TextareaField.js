@@ -13,17 +13,19 @@ import "../layouts/components.css";
 class TextareaField extends PureComponent {
   constructor(props) {
     super(props);
-
   }
 
   render() {
     return (
       <div className="w-100p">
         <div className="input-wrap">
-        <div className="input-wrap">
-           <label>{this.props.labelName}</label>
-           <textarea onChange={ (e) => this.props.setValue(e.target.value) }  />
-        </div>
+          <div className="input-wrap">
+            <label>{this.props.labelName}</label>
+            <textarea
+              defaultValue={this.props.initialValue || ""}
+              onChange={e => this.props.setValue(e.target.value)}
+            />
+          </div>
         </div>
       </div>
     );
