@@ -37,6 +37,10 @@
   margin-bottom: 10px;
 }
 
+.m-r-20 {
+  margin-right: 20px;
+}
+
 .m-t-100 {
   margin-top: 100px;
 }
@@ -54,6 +58,10 @@
 }
 .m-t-10 {
   margin-top: 10px;
+}
+
+.w-50p {
+  width: 50%;
 }
 
 .mx-w-600 {

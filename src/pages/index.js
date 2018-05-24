@@ -23,7 +23,7 @@ class IndexPage extends PureComponent {
           <p>
             <b>What' this?</b> Essentially a style guide, but components
             have full functionality. We're creating the puzzle pieces to
-            the COG Merchant app first, then we'll add display logic, routing, etc.
+            the COG Merchant app first, then we'll add display logic, routing, etc. and hook it up to the database.
           </p>
           <p>
             This page should only house working components. While developing,

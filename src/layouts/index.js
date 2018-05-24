@@ -15,7 +15,7 @@ class TemplateWrapper extends React.Component {
     return (
       <div>
         <Helmet
-          title="COG Merchant"
+          title="COG UI Kit"
           meta={[
             { name: "description", content: "Sample" },
             { name: "keywords", content: "sample, something" }
