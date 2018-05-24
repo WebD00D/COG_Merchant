@@ -37,6 +37,10 @@
   margin-bottom: 10px;
 }
 
+.m-r-20 {
+  margin-right: 20px;
+}
+
 .m-t-100 {
   margin-top: 100px;
 }
@@ -56,8 +60,13 @@
   margin-top: 10px;
 }
 
+
 .mx-w-600 {
   max-width: 600px;
+}
+
+.w-50p {
+  width: 50%;
 }
 
 .w-100p {
@@ -91,6 +100,10 @@
 
 .fc-purple {
   color: #0c1267;
+}
+
+.td-none {
+  text-decoration: none;
 }
 
 .o-3 {

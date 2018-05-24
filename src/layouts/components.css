@@ -1,9 +1,21 @@
+.fixed-component-nav {
+  background-color: #FFFFFF;
+  padding: 15px;
+  width: 300px;
+  border-radius: 4px;
+  position: fixed;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
 .component {
   width: 100%;
   border-radius: 4px;
   background-color: #ffffff;
   margin-bottom: 100px;
   position: relative;
+
 }
 
 .component-container {
@@ -25,9 +37,19 @@
   font-size: 13px;
 }
 
+.switch-label {
+  color: #0c1267;
+  opacity: 0.23;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 13px;
+  margin-left: 12px;
+}
+
 .input-wrap input,
-textarea {
-  margin-bottom: 18px;
+textarea, select {
+  margin-bottom: 18px !important;
   height: 42px;
   padding-left: 12px;
   outline: none;
@@ -36,6 +58,7 @@ textarea {
   transition: 0.2s ease;
   color: #0c1267;
   font-size: 16px;
+  background-color: #FFFFFF;
 }
 
 .input-wrap textarea {
@@ -47,8 +70,53 @@ textarea {
 .input-wrap input:active,
 .input-wrap input:focus,
 .input-wrap textarea:active,
-.input-wrap textarea:focus {
+.input-wrap textarea:focus,
+.input-wrap select:active,
+.input-wrap select:focus {
   border: 2px solid #0c1267;
+}
+
+
+.switch {
+  height: 28px;
+  width: 75px;
+  min-width: 75px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  transition: 0.3s ease;
+
+}
+
+.switch__control {
+  background-color: #f2f2f4;
+  border-radius: 2px;
+  height: 20px;
+  width: 32px;
+  position: absolute;
+  transition: 0.3s ease;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.switch__control--on {
+  left: 38px;
+}
+
+.switch__control--off {
+  left: 5px;
+}
+
+.switch--off {
+  background-color: #ebeaec;
+}
+
+.switch--on {
+  background-color: #7cc492;
 }
 
 .button-secondary {

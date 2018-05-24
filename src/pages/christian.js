@@ -1,6 +1,6 @@
 import React from "react";
 
-import TestComponent from "../components/TestComponent";
+import FoodCategorySelectors from "../components/FoodCategorySelectors";
 
 const DevPage = () => (
   <div className="page-container">
@@ -10,7 +10,9 @@ const DevPage = () => (
         Import your "In-Progress" component here. When finished, import it on
         the index page.
       </p>
-      <TestComponent />
+      <div className="mx-w-600">
+        <FoodCategorySelectors />
+      </div>
     </div>
   </div>
 );
