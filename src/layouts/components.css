@@ -1,9 +1,21 @@
+.fixed-component-nav {
+  background-color: #FFFFFF;
+  padding: 15px;
+  width: 300px;
+  border-radius: 4px;
+  position: fixed;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
 .component {
   width: 100%;
   border-radius: 4px;
   background-color: #ffffff;
   margin-bottom: 100px;
   position: relative;
+
 }
 
 .component-container {
@@ -75,7 +87,7 @@ textarea, select {
   position: relative;
   cursor: pointer;
   transition: 0.3s ease;
-  
+
 }
 
 .switch__control {

@@ -31,6 +31,8 @@ class MerchantSettings extends PureComponent {
       state: "",
       zip: "",
       pickupOrDelivery: "Delivery Only",
+      pickupFee: '',
+      deliveryFee: '',
       merchantCategories: []
     };
   }
@@ -96,63 +98,28 @@ class MerchantSettings extends PureComponent {
             ]}
           />
 
-          <div className="fx fx-col fx-j-c m-t-30 mx-600 m-b-20">
-            <div className="fx fx-a-c w-50p">
-              <Switch defaultValue={true} />
-              <label className="switch-label">
-                  Beer & Wine
-              </label>
-            </div>
+          <InputField
+            setValue={value => this.setState({ pickupFee: value })}
+            labelName="Pickup Fee"
+            inputType="number"
+          />
 
-            <div className="fx fx-a-c w-50p">
-              <Switch defaultValue={true} />
-              <label className="switch-label">
-                  Korean
-              </label>
-            </div>
+          <InputField
+            setValue={value => this.setState({ deliveryFee: value })}
+            labelName="Delivery Fee"
+            inputType="number"
+          />
 
+
+
+          <div className="fx fx-a-c w-50p m-b-20">
+            <Switch defaultValue={true} />
+            <label className="switch-label">
+                Call Ins Only
+            </label>
           </div>
-
-          <div className="fx fx-col fx-j-c m-t-30 mx-600 m-b-20">
-            <div className="fx fx-a-c w-50p">
-              <Switch defaultValue={false} />
-              <label className="switch-label">
-                  Indian
-              </label>
-            </div>
-
-            <div className="fx fx-a-c w-50p">
-              <Switch defaultValue={false} />
-              <label className="switch-label">
-                  Thai
-              </label>
-            </div>
-
-          </div>
-
-          <div className="fx fx-col fx-j-c m-t-30 mx-600 m-b-20">
-            <div className="fx fx-a-c w-50p">
-              <Switch defaultValue={false} />
-              <label className="switch-label">
-                  Japanese
-              </label>
-            </div>
-
-            <div className="fx fx-a-c w-50p">
-              <Switch defaultValue={true} />
-              <label className="switch-label">
-                  Chinese
-              </label>
-            </div>
-
-          </div>
-
-
-
-
 
           <button
-
             className="bg-red button-secondary"
           >
             Save Settings

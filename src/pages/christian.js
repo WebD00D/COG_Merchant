@@ -1,6 +1,6 @@
 import React from "react";
 
-import MerchantSettings from "../components/MerchantSettings";
+import FoodCategorySelectors from "../components/FoodCategorySelectors";
 
 const DevPage = () => (
   <div className="page-container">
@@ -11,7 +11,7 @@ const DevPage = () => (
         the index page.
       </p>
       <div className="mx-w-600">
-        <MerchantSettings />
+        <FoodCategorySelectors />
       </div>
     </div>
   </div>

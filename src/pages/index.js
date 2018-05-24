@@ -6,6 +6,11 @@ import "../layouts/fcss.css";
 
 import { connect } from "react-redux";
 
+import ComponentKitHeader from "../components/ComponentKitHeader";
+import ComponentKit from "../components/ComponentKit";
+
+import FoodCategorySelectors from "../components/FoodCategorySelectors";
+import MerchantSettings from "../components/MerchantSettings";
 import MenuCategory from "../components/MenuCategory";
 
 class IndexPage extends PureComponent {
@@ -21,26 +26,53 @@ class IndexPage extends PureComponent {
         <div className="m-b-100">
           <h1>COG Components</h1>
           <p>
-            <b>What' this?</b> Essentially a style guide, but components
-            have full functionality. We're creating the puzzle pieces to
-            the COG Merchant app first, then we'll add display logic, routing, etc. and hook it up to the database.
+            <b>What' this?</b> Essentially a style guide, but components have
+            full functionality. We're creating the puzzle pieces to the COG
+            Merchant app first, then we'll add display logic, routing, etc. and
+            hook it up to the database.
           </p>
           <p>
             This page should only house working components. While developing,
-            <b> KNOWN Team</b> should use <Link to="/known">this</Link> page
-            to import their WIP components. Christian will use <Link to="/christian">this</Link>
+            <b> KNOWN Team</b> should use <Link to="/known">this</Link> page to
+            import their WIP components. Christian will use{" "}
+            <Link to="/christian">this</Link>
+          </p>
+          <p>
+            When you import a complete component, be sure to wrap it an{" "}
+            <code>ComonentKit</code> with an id, and fileName prop. Then update
+            the nav / task list.
           </p>
         </div>
-        <div>
-          <div className="m-b-40">
-            <code style={{ paddingLeft: "10px", paddingRight: "10px" }}>
-              MenuCategory.js
-            </code>
-          </div>
-          <div className="mx-w-600">
-            <MenuCategory menuId={false} />
-          </div>
+
+        <div className="fixed-component-nav">
+            <a href="/#food-selectors" className="fc-purple td-none">Cuisine Types</a>
+            <a href="/#merchant-settings" className="fc-purple td-none">Merchant Settings</a>
+            <a href="/#menu-category" className="fc-purple td-none">Menu Categories</a>
+
+            <a href="/#" className="fc-purple td-none o-3">Merchant Hours</a>
+            <a href="/#" className="fc-purple td-none o-3">Min and Max Amounts</a>
+            <a href="/#" className="fc-purple td-none o-3">Food Item Options</a>
+            <a href="/#" className="fc-purple td-none o-3">Receipt Settings</a>
+
+
         </div>
+
+        {/* COMPONENT LIST */}
+
+        <ComponentKit id="food-selectors" fileName="FoodCategorySelectors.js">
+          <FoodCategorySelectors />{" "}
+        </ComponentKit>
+
+        <ComponentKit id="merchant-settings" fileName="MerchantSettings.js">
+          <MerchantSettings />
+        </ComponentKit>
+
+        <ComponentKit id="menu-category" fileName="MenuCategory.js">
+          <MenuCategory menuId={false} />
+        </ComponentKit>
+
+
+        {/* ENC COMPONENT LIST */}
       </div>
     );
   }
