@@ -1,6 +1,8 @@
 import React from "react";
 
 import FoodCategorySelectors from "../components/FoodCategorySelectors";
+import ValidationSample from "../components/ValidationSample";
+
 
 const DevPage = () => (
   <div className="page-container">
@@ -11,7 +13,7 @@ const DevPage = () => (
         the index page.
       </p>
       <div className="mx-w-600">
-        <FoodCategorySelectors />
+        <ValidationSample />
       </div>
     </div>
   </div>

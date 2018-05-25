@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 import ComponentKitHeader from "../components/ComponentKitHeader";
 import ComponentKit from "../components/ComponentKit";
 
+import ValidationSample from "../components/ValidationSample";
+
 import FoodCategorySelectors from "../components/FoodCategorySelectors";
 import MerchantSettings from "../components/MerchantSettings";
 import MenuCategory from "../components/MenuCategory";
@@ -26,7 +28,7 @@ class IndexPage extends PureComponent {
         <div className="m-b-100">
           <h1>COG Components</h1>
           <p>
-            <b>What' this?</b> Essentially a style guide, but components have
+            <b>What's this?</b> Essentially a style guide, but components have
             full functionality. We're creating the puzzle pieces to the COG
             Merchant app first, then we'll add display logic, routing, etc. and
             hook it up to the database.
@@ -45,6 +47,8 @@ class IndexPage extends PureComponent {
         </div>
 
         <div className="fixed-component-nav">
+
+            <a href="/#validation" className="fc-purple td-none">Validation Sample</a>
             <a href="/#food-selectors" className="fc-purple td-none">Cuisine Types</a>
             <a href="/#merchant-settings" className="fc-purple td-none">Merchant Settings</a>
             <a href="/#menu-category" className="fc-purple td-none">Menu Categories</a>
@@ -58,6 +62,10 @@ class IndexPage extends PureComponent {
         </div>
 
         {/* COMPONENT LIST */}
+
+        <ComponentKit id="validation" fileName="ValidationSample.js">
+          <ValidationSample />{" "}
+        </ComponentKit>
 
         <ComponentKit id="food-selectors" fileName="FoodCategorySelectors.js">
           <FoodCategorySelectors />{" "}
