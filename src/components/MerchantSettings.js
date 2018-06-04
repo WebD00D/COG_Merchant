@@ -113,7 +113,7 @@ class MerchantSettings extends PureComponent {
 
 
           <div className="fx fx-a-c w-50p m-b-20">
-            <Switch defaultValue={true} />
+            <Switch handleChange={ (value) => console.log(value) } defaultValue={true} />
             <label className="switch-label">
                 Call Ins Only
             </label>

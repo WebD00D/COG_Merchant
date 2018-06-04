@@ -2,6 +2,8 @@ import React from "react";
 
 import FoodCategorySelectors from "../components/FoodCategorySelectors";
 import ValidationSample from "../components/ValidationSample";
+import MerchantHours from "../components/MerchantHours";
+
 
 
 const DevPage = () => (
@@ -13,7 +15,7 @@ const DevPage = () => (
         the index page.
       </p>
       <div className="mx-w-600">
-        <ValidationSample />
+        <MerchantHours />
       </div>
     </div>
   </div>
