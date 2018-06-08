@@ -10,12 +10,10 @@ import ComponentKitHeader from "../components/ComponentKitHeader";
 import ComponentKit from "../components/ComponentKit";
 
 import ValidationSample from "../components/ValidationSample";
-
 import FoodCategorySelectors from "../components/FoodCategorySelectors";
 import MerchantSettings from "../components/MerchantSettings";
 import MenuCategory from "../components/MenuCategory";
 import MerchantHours from "../components/MerchantHours";
-
 
 class IndexPage extends PureComponent {
   constructor(props) {
@@ -49,18 +47,14 @@ class IndexPage extends PureComponent {
         </div>
 
         <div className="fixed-component-nav">
-
             <a href="/#merchant-hours" className="fc-purple td-none ">Merchant Hours</a>
             <a href="/#validation" className="fc-purple td-none">Validation Sample</a>
             <a href="/#food-selectors" className="fc-purple td-none">Cuisine Types</a>
             <a href="/#merchant-settings" className="fc-purple td-none">Merchant Settings</a>
             <a href="/#menu-category" className="fc-purple td-none">Menu Categories</a>
-
             <a href="/#" className="fc-purple td-none o-3">Min and Max Amounts</a>
             <a href="/#" className="fc-purple td-none o-3">Food Item Options</a>
             <a href="/#" className="fc-purple td-none o-3">Receipt Settings</a>
-
-
         </div>
 
         {/* COMPONENT LIST */}
@@ -84,9 +78,6 @@ class IndexPage extends PureComponent {
         <ComponentKit id="menu-category" fileName="MenuCategory.js">
           <MenuCategory menuId={false} />
         </ComponentKit>
-
-
-
 
         {/* ENC COMPONENT LIST */}
       </div>
