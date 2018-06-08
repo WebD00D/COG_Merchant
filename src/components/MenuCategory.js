@@ -13,6 +13,7 @@ import "../layouts/components.css";
 import InputField from "./InputField";
 import TextareaField from "./TextareaField";
 import MenuItem from "./MenuItem";
+import Switch from "./Switch";
 
 class MenuCategory extends PureComponent {
   constructor(props) {
@@ -24,6 +25,7 @@ class MenuCategory extends PureComponent {
     this._handleAddItem = this._handleAddItem.bind(this);
     this._handleUpdateItem = this._handleUpdateItem.bind(this);
     this._handleDeleteItem = this._handleDeleteItem.bind(this);
+    this._handleChange = this._handleChange.bind(this);
 
     this.state = {
       showItemForm: false,
@@ -31,6 +33,14 @@ class MenuCategory extends PureComponent {
 
       categoryName: "",
       categoryDescription: "",
+
+      mon: true,
+      tues: true,
+      wed: true,
+      thurs: true,
+      fri: true,
+      sat: false,
+      sun: false,
 
       newItemName: "",
       newItemDescription: "",
@@ -56,6 +66,48 @@ class MenuCategory extends PureComponent {
         }
       ]
     };
+  }
+
+  _handleChange(value, field) {
+    switch (field) {
+      case "mon":
+        this.setState({
+          mon: value
+        });
+        break;
+      case "tues":
+        this.setState({
+          tues: value
+        });
+        break;
+      case "wed":
+        this.setState({
+          wed: value
+        });
+        break;
+      case "thurs":
+        this.setState({
+          thurs: value
+        });
+        break;
+      case "fri":
+        this.setState({
+          fri: value
+        });
+        break;
+      case "sat":
+        this.setState({
+          sat: value
+        });
+        break;
+      case "sun":
+        this.setState({
+          sun: value
+        });
+        break;
+
+      default:
+    }
   }
 
   _handleShowAddForm(key) {
@@ -259,6 +311,83 @@ class MenuCategory extends PureComponent {
             setValue={value => this.setState({ categoryDescription: value })}
             labelName="Category Description"
           />
+
+          <div className="fx fx-j-c m-t-30 mx-600 m-b-20 m-t-20">
+            <div className="fx fx-a-c w-50p">
+              <Switch
+                handleChange={value =>
+                  this._handleChange(value, "mon")
+                }
+                defaultValue={this.state.mon}
+              />
+              <label className="switch-label">Monday</label>
+            </div>
+            <div className="fx fx-a-c w-50p">
+              <Switch
+                handleChange={value =>
+                  this._handleChange(value, "tues")
+                }
+                defaultValue={this.state.tues}
+              />
+              <label className="switch-label">Tuesday</label>
+            </div>
+          </div>
+
+          <div className="fx fx-j-c m-t-30 mx-600 m-b-20 m-t-20">
+            <div className="fx fx-a-c w-50p">
+              <Switch
+                handleChange={value =>
+                  this._handleChange(value, "wed")
+                }
+                defaultValue={this.state.wed}
+              />
+              <label className="switch-label">Wednesday</label>
+            </div>
+            <div className="fx fx-a-c w-50p">
+              <Switch
+                handleChange={value =>
+                  this._handleChange(value, "thurs")
+                }
+                defaultValue={this.state.thurs}
+              />
+              <label className="switch-label">Thursday</label>
+            </div>
+          </div>
+
+          <div className="fx fx-j-c m-t-30 mx-600 m-b-20 m-t-20">
+            <div className="fx fx-a-c w-50p">
+              <Switch
+                handleChange={value =>
+                  this._handleChange(value, "fri")
+                }
+                defaultValue={this.state.fri}
+              />
+              <label className="switch-label">Friday</label>
+            </div>
+            <div className="fx fx-a-c w-50p">
+              <Switch
+                handleChange={value =>
+                  this._handleChange(value, "sat")
+                }
+                defaultValue={this.state.sat}
+              />
+              <label className="switch-label">Saturday</label>
+            </div>
+          </div>
+
+          <div className="fx fx-j-c m-t-30 mx-600 m-b-20 m-t-20">
+            <div className="fx fx-a-c w-50p">
+              <Switch
+                handleChange={value =>
+                  this._handleChange(value, "sun")
+                }
+                defaultValue={this.state.sun}
+              />
+              <label className="switch-label">Sunday</label>
+            </div>
+
+          </div>
+
           <button
             onClick={() => this._handleShowAddForm()}
             className="bg-red button-secondary"
