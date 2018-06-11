@@ -5,6 +5,7 @@ import ValidationSample from "../components/ValidationSample";
 import MerchantHours from "../components/MerchantHours";
 import MerchantOrderSettings from "../components/MerchantOrderSettings";
 
+import MapZone from "../components/MapZone";
 
 const DevPage = () => (
   <div className="page-container">
@@ -14,8 +15,8 @@ const DevPage = () => (
         Import your "In-Progress" component here. When finished, import it on
         the index page.
       </p>
-      <div className="mx-w-600">
-        <MerchantOrderSettings />
+      <div>
+        <MapZone />
       </div>
     </div>
   </div>

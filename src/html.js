@@ -34,7 +34,7 @@ module.exports = props => {
         {css}
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
         <script src="https://use.fontawesome.com/9aa665cf7f.js"></script>
-
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu0azHVEJf3dYGGq1s8Ck3LMZKFZIRORI&libraries=drawing" />
 
       </head>
       <body className="sans-serif black">
