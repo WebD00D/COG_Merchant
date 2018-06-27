@@ -35,6 +35,7 @@ module.exports = props => {
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
         <script src="https://use.fontawesome.com/9aa665cf7f.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu0azHVEJf3dYGGq1s8Ck3LMZKFZIRORI&libraries=drawing" />
+        <script src="https://cdn.jsdelivr.net/npm/js-map-label@1.0.1/src/maplabel-compiled.js" />
 
       </head>
       <body className="sans-serif black">

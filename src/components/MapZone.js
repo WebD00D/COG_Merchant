@@ -18,11 +18,9 @@ class MapZone extends PureComponent {
 
     this.setState({
       zones: [
-
           {
             name: "Zone 1"
           }
-
       ]
     })
   }
@@ -39,10 +37,11 @@ class MapZone extends PureComponent {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             },
-            zoom: 18
+            zoom: 10
           });
 
-          // Construct the polygon
+          // CONSTRUCT POLYGON
+          // NOTE: We'd run this block of code for each group of zone pulled in from the db..
           var aNewShapeCoords = [
             new google.maps.LatLng(34.000559, -118.440392),
             new google.maps.LatLng(34.000314, -118.439035),
@@ -59,11 +58,20 @@ class MapZone extends PureComponent {
             strokeOpacity: 0.8,
             strokeWeight: 2,
             fillColor: "#FF0000",
-            fillOpacity: 0.35
+            fillOpacity: 0.35,
+            zoneTitle: "Zone 1"
+          });
+
+          var mapLabel = new MapLabel({
+            text: 'Test',
+            position: new google.maps.LatLng(34.000559, -118.440392),
+            map: map,
+            fontSize: 35,
+            align: 'right',
+            zIndex: 100
           });
 
           aNewShape.setMap(map);
-
           google.maps.event.addListener(aNewShape, "click", function(event){
 
               this._handleSetSelection(aNewShape);
@@ -72,17 +80,10 @@ class MapZone extends PureComponent {
               this._getPolygonCoords(aNewShape);
            
           }.bind(this))
-
-
-          // SETUP LISTENERS FOR ALL THESE SHAPES..
-
-
-          
           // END CONSTRUCT POLYGON
 
-        
+    
           var all_overlays = [];
-
           var drawingManager = new google.maps.drawing.DrawingManager({
             drawingMode: google.maps.drawing.OverlayType.POLYGON,
             drawingControl: true,
@@ -114,9 +115,6 @@ class MapZone extends PureComponent {
                 var newShape = event.overlay;
                 newShape.type = event.type;
 
-                console.log("shape type", newShape)
-
-                
                 this._getPolygonCoords(newShape);
 
                 google.maps.event.addListener(
@@ -161,17 +159,14 @@ class MapZone extends PureComponent {
     shape.setEditable(true);
     this.selectedShape = shape;
       
-  
+
   }
-
-
 
   _handleDeleteZone() {
     if ( this.selectedShape ) {
       this.selectedShape.setMap(null);
       this.selectedShape = null;
     }
-   
   }
 
   _getPolygonCoords = function(newShape) {
@@ -192,7 +187,7 @@ class MapZone extends PureComponent {
   render() {
     return (
       <div className="w-100p">
-        GOOGLE MAPS
+        COG ZONES
         <div style={{ height: "500px" }} id="map" />
         <button onClick={()=> this._handleDeleteZone()}>Delete Zone</button>
         
