@@ -11,7 +11,6 @@ class MapZone extends PureComponent {
     this._handlePlaceMarker = this._handlePlaceMarker.bind(this);
     this._handleSetSelection = this._handleSetSelection.bind(this);
     this._getPolygonCoords = this._getPolygonCoords.bind(this);
-
     this._handleDeleteZone = this._handleDeleteZone.bind(this);
 
     this.selectedShape;
@@ -63,10 +62,10 @@ class MapZone extends PureComponent {
           });
 
           var mapLabel = new MapLabel({
-            text: 'Test',
+            text: 'Zone 1',
             position: new google.maps.LatLng(34.000559, -118.440392),
             map: map,
-            fontSize: 35,
+            fontSize: 22,
             align: 'right',
             zIndex: 100
           });
