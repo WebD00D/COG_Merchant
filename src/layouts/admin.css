@@ -110,3 +110,50 @@
     height: 70px;
 }
 
+.admin-info-panel {
+    background-color: white;
+    width: 400px;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+.admin-info-panel__wrap {
+    padding: 30px;
+}
+
+.admin-info__section {
+    border-radius: 4px;
+    border: 1px solid #ABBDD1;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.admin-info__section div {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+.admin-info__item {
+    color: #ABBDD1;
+}
+
+.admin-info__item--active {
+    color: #0c1267;
+}
+
+.highlighted-form-fields {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    border-radius: 4px;
+    background-color: #FFFFFF;
+    padding: 30px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.highlighted-form-field__text {
+    font-size: 15px;
+    color: #ABBDD1;
+}

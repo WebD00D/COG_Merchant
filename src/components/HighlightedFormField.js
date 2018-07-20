@@ -9,21 +9,20 @@ import "../layouts/admin.css";
 
 import { connect } from "react-redux";
 
-class AdminActionBar extends PureComponent {
+class HighlightedFormField extends PureComponent {
   constructor(props) {
     super(props);
-
   }
 
 
   render() {
     return (
-      <div className="admin-title-bar">
-          <div className="admin-back"><i className="fa fa-long-arrow-left"></i> Back</div>
-          <button style={{backgroundColor: "#0c1267"}}><i className="fa fa-check-circle"></i> Save Merchant</button>
+        <div className="highlighted-form-fields">
+        {this.props.children}
+        <div className="highlighted-form-field__text">{this.props.highlightText}</div>
       </div>
     );
   }
 }
 
-export default AdminActionBar;
+export default HighlightedFormField;
