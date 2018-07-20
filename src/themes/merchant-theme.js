@@ -16,7 +16,7 @@ import { Avatar, Badge } from 'antd';
 
 import InputField from "../components/InputField";
 
-class AdminTheme extends PureComponent {
+class MerchantTheme extends PureComponent {
   constructor(props) {
     super(props);
   }
@@ -28,16 +28,13 @@ class AdminTheme extends PureComponent {
             <div className="admin__menu-wrap">
                 <div className="admin__logo-wrap">
                     <img style={{height: "40px"}} src={require("../layouts/images/logo@2x.png")}/>
-                    <div className="theme-type">ADMIN</div>
+                    <div className="theme-type">MERCHANT</div>
                 </div>
-                <Link to="/admin/dashboard">
+                <Link to="/merchant/dashboard">
                     <i className="fa fa-cutlery" aria-hidden="true"></i>Orders
                 </Link>
-                <Link to="/admin/merchant-list">
-                    <i className="fa fa-institution" aria-hidden="true"></i>Merchants
-                </Link>
-                <Link to="/admin/merchants">
-                    <i className="fa fa-bicycle" aria-hidden="true"></i>Delivery Zones
+                <Link to="/merchant/menus">
+                    <i className="fa fa-folder-open" aria-hidden="true"></i>Menus
                 </Link>
                 <Link to="/admin/merchants">
                     <i className="fa fa-users" aria-hidden="true"></i>Users
@@ -63,4 +60,4 @@ class AdminTheme extends PureComponent {
   }
 }
 
-export default AdminTheme;
+export default MerchantTheme;

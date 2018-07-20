@@ -5,7 +5,7 @@ html {
 }
 body {
   margin: 0;
-  background-color: #F7F8FB;
+  background-color: #F7F8FB !important;
   font-family: 'Source Sans Pro', sans-serif !important;
 
 }

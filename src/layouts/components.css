@@ -169,3 +169,14 @@ textarea, select {
 .field-group--right {
   margin-left: 7px;
 }
+
+.dropdown-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-wrapper label {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}

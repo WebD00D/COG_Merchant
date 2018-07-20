@@ -28,7 +28,7 @@ class InputField extends PureComponent {
     });
 
     return (
-      <div className={inputWrapperClass}>
+      <div className={inputWrapperClass} style={{width: this.props.wrapperWidth}}>
         <div className="input-wrap">
           <label>{this.props.labelName}</label>
           <input

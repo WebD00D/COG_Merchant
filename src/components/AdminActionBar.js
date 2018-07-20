@@ -7,6 +7,9 @@ import "../layouts/components.css";
 import "../layouts/admin.css";
 
 
+import InputField from "../components/InputField";
+
+
 import { connect } from "react-redux";
 
 class AdminActionBar extends PureComponent {
@@ -30,19 +33,26 @@ class AdminActionBar extends PureComponent {
         break;
     }
 
+    let wrapperWidth = !this.props.hideButton ? "400px" : "";
 
     return (
       <div className="admin-title-bar">
+          
           {this.props.backRoute ? 
             <Link to={this.props.backRoute} className="admin-back"><i className="fa fa-long-arrow-left"></i> Back</Link>
             : 
-            <div></div> 
+            ""
             }
-          {this.props.route ? 
+
+          {this.props.searchBar ? <InputField placeholder={this.props.inputPlaceholder} wrapperWidth={wrapperWidth} />  : ""}
+
+          {this.props.route && !this.props.button ? 
             <Link className="button" to={this.props.route} style={{backgroundColor: "#0c1267"}}><i className={iconClass}></i> {this.props.action} {this.props.model}</Link>
-          : 
-            <button className="button" style={{backgroundColor: "#0c1267"}}><i className={iconClass}></i> {this.props.action} {this.props.model}</button>
+          :  ""
           }
+
+          {!this.props.route && !this.props.hideButton ? <button className="button" style={{backgroundColor: "#0c1267"}}><i className={iconClass}></i> {this.props.action} {this.props.model}</button>
+          : ""} 
       </div>
     );
   }
