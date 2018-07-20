@@ -27,22 +27,22 @@ class AdminTheme extends PureComponent {
                     <img style={{height: "40px"}} src={require("../layouts/images/logo@2x.png")}/>
                     <div className="theme-type">ADMIN</div>
                 </div>
-                <Link to="/pages/admin/dashboard">
+                <Link to="/admin/dashboard">
                     <i className="fa fa-tachometer" aria-hidden="true"></i>Dashboard
                 </Link>
-                <Link to="/pages/admin/merchants">
+                <Link to="/admin/merchant-list">
                     <i className="fa fa-institution" aria-hidden="true"></i>Merchants
                 </Link>
-                <Link to="/pages/admin/merchants">
+                <Link to="/admin/merchants">
                     <i className="fa fa-bicycle" aria-hidden="true"></i>Delivery Zones
                 </Link>
-                <Link to="/pages/admin/merchants">
+                <Link to="/admin/merchants">
                     <i className="fa fa-users" aria-hidden="true"></i>Users
                 </Link>
-                <Link to="/pages/admin/merchants">
+                <Link to="/admin/merchants">
                     <i className="fa fa-sliders" aria-hidden="true"></i>Settings
                 </Link>
-                <Link className="admin__current-user" to="/pages/admin/merchants">
+                <Link className="admin__current-user" to="/admin/merchants">
                     <i className="fa fa-user" aria-hidden="true"></i>
                 </Link>
             </div>

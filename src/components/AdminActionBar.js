@@ -15,12 +15,34 @@ class AdminActionBar extends PureComponent {
 
   }
 
-
   render() {
+
+    let iconClass;
+    
+    switch (this.props.action) {
+      case "Save":
+        iconClass = "fa fa-check-circle"
+        break;
+      case "Add":
+        iconClass = "fa fa-plus-circle"
+        break;
+      default:
+        break;
+    }
+
+
     return (
       <div className="admin-title-bar">
-          <div className="admin-back"><i className="fa fa-long-arrow-left"></i> Back</div>
-          <button style={{backgroundColor: "#0c1267"}}><i className="fa fa-check-circle"></i> Save Merchant</button>
+          {this.props.backRoute ? 
+            <Link to={this.props.backRoute} className="admin-back"><i className="fa fa-long-arrow-left"></i> Back</Link>
+            : 
+            <div></div> 
+            }
+          {this.props.route ? 
+            <Link className="button" to={this.props.route} style={{backgroundColor: "#0c1267"}}><i className={iconClass}></i> {this.props.action} {this.props.model}</Link>
+          : 
+            <button className="button" style={{backgroundColor: "#0c1267"}}><i className={iconClass}></i> {this.props.action} {this.props.model}</button>
+          }
       </div>
     );
   }

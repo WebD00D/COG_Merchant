@@ -25,13 +25,17 @@ import HighlightedFormField from "../../components/HighlightedFormField";
 class Merchant extends PureComponent {
   constructor(props) {
     super(props);
+
+    this.state = {
+      merchantSection: "info" // info, login, api, billing
+    }
   }
 
   render() {
     return (
       <div>
         <AdminTheme>
-            <AdminActionBar />
+            <AdminActionBar action="Save" model="Merchant" backRoute="/admin/merchant-list" />
             <AdminPageTitle title="New Merchant" />
             <InputField labelName="Company name" />
             <InputField labelName="Phone" />
@@ -53,7 +57,7 @@ class Merchant extends PureComponent {
             <SelectField labelName="Status" selectOptions={["Pending Approval", "Active", "Suspended", "Blocked", "Expired"]} />
 
            
-            <AdminInfoPanel  contentId="123455" createdOn="" lastUpdated="">
+            <AdminInfoPanel  contentId="" createdOn="" lastUpdated="">
                 <div className="admin-info__item admin-info__item--active">
                     Merchant Info
                 </div>
