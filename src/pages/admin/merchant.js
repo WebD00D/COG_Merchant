@@ -22,6 +22,14 @@ import SelectField from "../../components/SelectField";
 import HighlightedFormField from "../../components/HighlightedFormField";
 
 
+import { TimePicker, Checkbox, Divider } from 'antd';
+import moment from 'moment';
+
+
+
+
+
+
 class Merchant extends PureComponent {
   constructor(props) {
     super(props);
@@ -30,6 +38,12 @@ class Merchant extends PureComponent {
       merchantSection: "info" // info, login, api, billing
     }
   }
+
+   onChange() {
+   
+  }
+  
+  
 
   render() {
     return (
@@ -52,11 +66,13 @@ class Merchant extends PureComponent {
                 </div>
             </HighlightedFormField>
 
-            <TextAreaField labelName="Description" />
-            <SelectField labelName="Pickup / Delivery" selectOptions={["Delivery & Pickup", "Delivery Only", "Pickup Only"]} />
-            <SelectField labelName="Status" selectOptions={["Pending Approval", "Active", "Suspended", "Blocked", "Expired"]} />
+            <InputField labelName="Primary Contact Name" />
+            <InputField labelName="Primary Contact Phone " />
 
-           
+            <TextAreaField labelName="Description" />
+            <SelectField labelName="Pickup / Delivery" selectOptions={["Delivery & Pickup", "Delivery Only", "Pickup Only", "Phone Orders Only"]} />
+            <SelectField labelName="Status" selectOptions={["Pending Approval", "Active", "Suspended", "Blocked", "Expired"]} />
+ 
             <AdminInfoPanel  contentId="" createdOn="" lastUpdated="">
                 <div className="admin-info__item admin-info__item--active">
                     Merchant Info

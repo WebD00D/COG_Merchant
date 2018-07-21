@@ -11,7 +11,7 @@ import "../layouts/fcss.css";
 import "../layouts/components.css";
 
 import 'antd/dist/antd.css';
-import { Menu, Dropdown, Button, Icon, message } from 'antd';
+import { Menu, Dropdown, Button, Checkbox ,Icon } from 'antd';
 
 class MerchantListActions extends PureComponent {
   constructor(props) {
@@ -42,9 +42,9 @@ class MerchantListActions extends PureComponent {
 
       const ZoneMenu = (
         <Menu>
-          <Menu.Item key="1"> Zone 1 </Menu.Item>
-          <Menu.Item key="2"> Zone 2 </Menu.Item>
-          <Menu.Item key="3"> Zone 3 </Menu.Item>
+          <Menu.Item key="1"> <Checkbox></Checkbox> Zone 1 </Menu.Item>
+          <Menu.Item key="2"> <Checkbox></Checkbox> Zone 2 </Menu.Item>
+          <Menu.Item key="3"> <Checkbox></Checkbox> Zone 3 </Menu.Item>
         </Menu>
       );
       

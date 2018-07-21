@@ -52,37 +52,12 @@ class Menu extends PureComponent {
 
             <HighlightedFormField highlightText="These are the days this menu is available">
 
-              <div className="m-b-20">  
-              <Checkbox onChange={this.onChange}>Sunday</Checkbox>
-              <TimePicker onChange={this.onChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
-              <span className="m-r-10">to</span>
-              <TimePicker onChange={this.onChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
-              </div>
-
-              <div className="m-b-20">  
-              <Checkbox onChange={this.onChange}>Monday</Checkbox>
-              <TimePicker onChange={this.onChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
-              <span className="m-r-10">to</span>
-              <TimePicker onChange={this.onChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
-              </div>
-
-              <div className="m-b-20">  
-              <Checkbox onChange={this.onChange}>Tuesday</Checkbox>
-              <TimePicker onChange={this.onChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
-              <span className="m-r-10">to</span>
-              <TimePicker onChange={this.onChange} defaultOpenValue={moment('00:00:00', 'HH:mm:ss')} />
-              </div>
-
+      
               
-
-
-                
+       
             </HighlightedFormField>
 
-            <SelectField labelName="Pickup / Delivery" selectOptions={["Delivery & Pickup", "Delivery Only", "Pickup Only"]} />
-            <SelectField labelName="Status" selectOptions={["Pending Approval", "Active", "Suspended", "Blocked", "Expired"]} />
-
-           
+ 
             <AdminInfoPanel  contentId="" createdOn="" lastUpdated="">
                 <div className="admin-info__item admin-info__item--active">
                     Menu Info

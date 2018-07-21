@@ -11,7 +11,8 @@ import "../../layouts/fcss.css";
 import "../../layouts/components.css";
 
 import 'antd/dist/antd.css';
-import { Menu, Dropdown, Button, Icon, message, Modal, Alert, Badge } from 'antd';
+import { Menu, Timeline, Dropdown, Button, Icon, message, Modal, Alert, Badge } from 'antd';
+
 
 
 import AdminTheme from "../../themes/admin-theme";
@@ -43,7 +44,6 @@ class Dashboard extends PureComponent {
       <div>
         <AdminTheme>
 
-
          <div style={{paddingTop: "30px"}}>    
             <Alert message="Order #123 Cancelled" closeText="Close" type="error" showIcon />
         </div>
@@ -55,8 +55,7 @@ class Dashboard extends PureComponent {
         <MerchantListActions />
         <OrderListItems />
 
-       
-        
+    
         <AdminInfoPanel  contentId="" createdOn="" lastUpdated="">
             <h3>Rider List</h3>
             <div className="admin-info__item admin-info__item--active">
