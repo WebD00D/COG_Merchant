@@ -34,7 +34,6 @@ class DeliveryZones extends PureComponent {
     this.state = {
       zoneBackground: "#fff",
       coordinates: [],
-     
     };
   }
 

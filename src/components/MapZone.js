@@ -108,17 +108,6 @@ class MapZone extends PureComponent {
               aNewShapeCoords.push(new google.maps.LatLng(lat, long));
             });
 
-          console.log("A NEW SHAPE COORDS ARRAY", aNewShapeCoords);
-
-
-          // var aNewShapeCoords = [
-          //   new google.maps.LatLng(34.000559, -118.440392),
-          //   new google.maps.LatLng(34.000314, -118.439035),
-          //   new google.maps.LatLng(33.999532, -118.439791),
-          //   new google.maps.LatLng(33.999287, -118.440923),
-          //   new google.maps.LatLng(34.000096, -118.441224),
-          //   new google.maps.LatLng(34.000274, -118.440843)
-          // ];
           let aNewShape = new google.maps.Polygon({
             paths: aNewShapeCoords,
             draggable: false,
