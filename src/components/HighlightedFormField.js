@@ -17,7 +17,7 @@ class HighlightedFormField extends PureComponent {
 
   render() {
     return (
-        <div className="highlighted-form-fields">
+        <div className="highlighted-form-fields" style={{marginTop: this.props.customTopMargin ? this.props.customTopMargin : ""}}>
         {this.props.children}
         <div className="highlighted-form-field__text">{this.props.highlightText}</div>
       </div>

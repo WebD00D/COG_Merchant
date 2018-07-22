@@ -10,37 +10,35 @@ import "../../layouts/fcss.css";
 import "../../layouts/components.css";
 import "../../layouts/authentication.css";
 
+import FormInputField from "../../components/FormInputField";
+import FormSelectField from "../../components/FormSelectField";
+import Loading from "../../components/Loading";
 import USAStates from "../../utils/us-states";
+import createId from "../../utils/app-utils";
 
 import "antd/dist/antd.css";
-import {
-  Form,
-  Input,
-  Tooltip,
-  Icon,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-  message,
-  Steps
-} from "antd";
+import { Form, Select, Button, message, Steps } from "antd";
 
-const FormItem = Form.Item;
 const Option = Select.Option;
-const AutoCompleteOption = AutoComplete.Option;
 const Step = Steps.Step;
-
-import AdminTheme from "../../themes/admin-theme";
 
 class CourierRegistration extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
-      current: 0
+      current: 0,
+      company: "",
+      phone: "",
+      email: "",
+      contactPerson: "",
+      city: "",
+      usState: "",
+      zip: "",
+      loginEmail: "",
+      loginPassword: "",
+
+      showSpin: false,
+      accountCreated: false
     };
   }
 
@@ -54,101 +52,147 @@ class CourierRegistration extends React.Component {
     this.setState({ current });
   }
 
+  handleRegistration() {
+    this.setState({ showSpin: true });
+    const courierId = createId(`COURIER`);
+
+    // DO FIREBASE STUFF HEREEEEE...
+
+    // THEN ONCE FINISHED UPDATE STATE...
+
+    const user = {
+      authenticated: true,
+      id: courierId,
+      type: `COURIER`,
+      email: this.state.loginEmail,
+      name: this.state.contactPerson
+    };
+
+    const courier = {
+      id: courierId,
+      contactName: this.state.contactPerson,
+      contactEmail: this.state.email,
+      contactPhone: this.state.phone,
+      city: this.state.city,
+      state: this.state.usState,
+      zip: this.state.zip,
+      authenticationEmail: this.state.loginEmail
+    };
+
+    this.props.createCourier(user, courier);
+  }
+
   handleStepOne() {
-    
     return (
       <div>
-        <FormItem
-          hasFeedback
-          validateStatus="error"
-          help=""
+        <FormInputField
           label="Company"
-        >
-          <Input />
-        </FormItem>
-        <FormItem
-          hasFeedback
-          validateStatus=""
-          help=""
+          status="error"
+          helpText=""
+          defaultValue={this.state.company}
+          handleChange={val => {
+            this.setState({ company: val });
+          }}
+        />
+
+        <FormInputField
           label="Contact Person"
-        >
-          <Input />
-        </FormItem>
-        <FormItem
-          hasFeedback
-          validateStatus=""
-          help=""
+          status=""
+          helpText=""
+          defaultValue={this.state.phone}
+          handleChange={val => {
+            this.setState({ contactPerson: val });
+          }}
+        />
+
+        <FormInputField
           label="Phone"
-        >
-          <Input />
-        </FormItem>
-        <FormItem
-          hasFeedback
-          validateStatus=""
-          help=""
+          status=""
+          helpText=""
+          defaultValue={this.state.phone}
+          handleChange={val => {
+            this.setState({ phone: val });
+          }}
+        />
+
+        <FormInputField
           label="Email"
-        >
-          <Input />
-        </FormItem>
-        
+          status=""
+          helpText=""
+          defaultValue={this.state.email}
+          handleChange={val => {
+            this.setState({ email: val });
+          }}
+        />
       </div>
     );
   }
 
   handleStepTwo() {
     const us_states = Object.keys(USAStates).map(key => {
-      return <Option value={key}>{USAStates[key]}</Option>;
+      return (
+        <Option key={key} value={key}>
+          {USAStates[key]}
+        </Option>
+      );
     });
     return (
       <div>
-        <FormItem
-          hasFeedback
-          validateStatus=""
-          help=""
+        <FormInputField
           label="City"
-        >
-          <Input />
-        </FormItem>
-        <FormItem label="State" hasFeedback validateStatus="">
-          <Select>{us_states}</Select>
-        </FormItem>
-        <FormItem
-          hasFeedback
-          validateStatus=""
-          help=""
-          label="Zip Code"
-        >
-          <Input />
-        </FormItem>
+          status=""
+          helpText=""
+          defaultValue={this.state.city}
+          handleChange={val => {
+            this.setState({ city: val });
+          }}
+        />
 
-       
+        <FormSelectField
+          label="State"
+          status=""
+          helpText=""
+          defaultValue={this.state.usState}
+          handleChange={val => {
+            this.setState({ usState: val });
+          }}
+          items={us_states}
+        />
+        <FormInputField
+          label="Zip"
+          status=""
+          helpText=""
+          defaultValue={this.state.zip}
+          handleChange={val => {
+            this.setState({ zip: val });
+          }}
+        />
       </div>
     );
   }
 
   handleStepThree() {
-  
     return (
       <div>
-        <FormItem
-          hasFeedback
-          validateStatus=""
-          help=""
+        <FormInputField
           label="Login email"
-        >
-          <Input />
-        </FormItem>
-        
-        <FormItem
-          hasFeedback
-          validateStatus=""
-          help=""
-          label="Password"
-        >
-          <Input type="password" />
-        </FormItem>
-
-       
+          status=""
+          helpText=""
+          defaultValue={this.state.loginEmail}
+          handleChange={val => {
+            this.setState({ loginEmail: val });
+          }}
+        />
+        <FormInputField
+          label="Login password"
+          status=""
+          helpText=""
+          inputType="password"
+          defaultValue={this.state.loginPassword}
+          handleChange={val => {
+            this.setState({ loginPassword: val });
+          }}
+        />
       </div>
     );
   }
@@ -156,19 +200,14 @@ class CourierRegistration extends React.Component {
   render() {
     const { current } = this.state;
 
-    const StepTwo = (
-      <div>
-        <FormItem
-          hasFeedback
-          validateStatus="error"
-          help=""
-          label="Second Step Input"
-        >
-          <Input />
-        </FormItem>
-      </div>
-    );
-
+    // this.props.user.authenticated ? <Redirect /> : ""
+  
+    if ( this.props.user.authenticated ) {
+      return (
+        <Redirect to="/admin/dashboard" />
+      )
+    } 
+    
     return (
       <div className="auth-body">
         <img
@@ -203,8 +242,8 @@ class CourierRegistration extends React.Component {
                       <Button
                         type="primary"
                         onClick={() => {
-                          this.handleAddRecord();
-                          message.success("Care patient created!");
+                          this.handleRegistration();
+                          message.success("Courier created!");
                         }}
                       >
                         Done
@@ -220,6 +259,8 @@ class CourierRegistration extends React.Component {
                     )}
                   </div>
                 </Form>
+
+                {this.state.showSpin ? <Loading /> : ""}
               </div>
             </div>
           </div>
@@ -229,4 +270,21 @@ class CourierRegistration extends React.Component {
   }
 }
 
-export default CourierRegistration;
+const mapStateToProps = ({ user }) => {
+  return { user };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    createCourier: (user, courier) =>
+      dispatch({
+        type: `CREATE_COURIER`,
+        user,
+        courier
+      })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(
+  CourierRegistration
+);

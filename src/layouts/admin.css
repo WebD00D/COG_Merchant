@@ -139,11 +139,7 @@
     margin-bottom: 30px;
 }
 
-.admin-info__section div {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-}
+
 
 .admin-info__item {
     color: #ABBDD1;

@@ -15,6 +15,7 @@
     "moment-timezone": "^0.5.13",
     "pluralize": "^7.0.0",
     "react-big-calendar": "^0.17.0",
+    "react-color": "^2.14.1",
     "react-disqus-comments": "^1.1.1",
     "react-firebase": "^2.2.7-4",
     "react-firebase-file-uploader": "^2.4.1",

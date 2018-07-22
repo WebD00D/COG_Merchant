@@ -36,7 +36,7 @@ class AdminTheme extends PureComponent {
                 <Link to="/admin/merchant-list">
                     <i className="fa fa-institution" aria-hidden="true"></i>Merchants
                 </Link>
-                <Link to="/admin/merchants">
+                <Link to="/admin/delivery-zones">
                     <i className="fa fa-bicycle" aria-hidden="true"></i>Delivery Zones
                 </Link>
                 <Link to="/admin/merchants">
