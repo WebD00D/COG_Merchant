@@ -4,7 +4,7 @@ import cx from "classnames";
 
 const GOOGLE_API_KEY = "AIzaSyBu0azHVEJf3dYGGq1s8Ck3LMZKFZIRORI";
 
-import { Button, Icon } from "antd";
+import { Button, Icon, Spin } from "antd";
 
 import Loading from "../components/Loading";
 
@@ -116,7 +116,7 @@ class MapZonesReadOnly extends PureComponent {
               let zoneShape = new google.maps.Polygon({
                 paths: zoneCoordinates,
                 draggable: false,
-                editable: true,
+                editable: false,
                 strokeColor: zoneObj.color,
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
@@ -163,9 +163,17 @@ class MapZonesReadOnly extends PureComponent {
     return (
       <div className="w-100p">
         <div
-          style={{ height: this.props.height, marginBottom: "30px" }}
+          style={{ height: this.props.height, marginBottom: "30px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}
           id={this.props.id}
-        />
+        >
+
+          <div className="input-wrap m-b-20">
+            <label>... LOADING MAP ...</label>
+           </div>
+           <Spin />
+
+
+        </div>
       </div>
     );
   }

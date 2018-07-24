@@ -4,9 +4,10 @@ import cx from "classnames";
 
 const GOOGLE_API_KEY = "AIzaSyBu0azHVEJf3dYGGq1s8Ck3LMZKFZIRORI";
 
-import {  Button, Icon } from "antd";
+import {  Button, Icon, Spin } from "antd";
 
-import Loading from "../components/Loading";
+
+
 
 class MapZone extends PureComponent {
   constructor(props) {
@@ -112,7 +113,7 @@ class MapZone extends PureComponent {
             paths: aNewShapeCoords,
             draggable: false,
             editable: true,
-            strokeColor: "#000000",
+            strokeColor: zoneColor,
             strokeOpacity: 0.8,
             strokeWeight: 2,
             fillColor: zoneColor,
@@ -192,8 +193,18 @@ class MapZone extends PureComponent {
         <div className="input-wrap m-b-20">
             <label>DRAW ZONE POLYGON {this.state.updating}</label>
            </div>
-        <div style={{ height: this.props.height }} id={this.props.id} />
-        <div className="m-t-20 m-b-20">
+           <div
+          style={{ height: this.props.height, marginBottom: "30px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}
+          id={this.props.id}
+        >
+
+          <div className="input-wrap m-b-20">
+            <label>... LOADING MAP ...</label>
+           </div>
+           <Spin />
+
+
+        </div>        <div className="m-t-20 m-b-20">
           <Button type="danger" onClick={() => this._handleDeleteZone()}>
             Delete Zone <Icon type="close" />
           </Button>

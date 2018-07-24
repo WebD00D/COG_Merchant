@@ -24,7 +24,7 @@ import TextAreaField from "../../components/TextareaField";
 import SelectField from "../../components/SelectField";
 import HighlightedFormField from "../../components/HighlightedFormField";
 
-import { TimePicker, Checkbox, Divider } from "antd";
+import { TimePicker, Checkbox, Divider, message } from "antd";
 import moment from "moment";
 
 class DeliveryZones extends PureComponent {
@@ -33,6 +33,7 @@ class DeliveryZones extends PureComponent {
 
     this.state = {
       zoneName: "",
+      zoneNotes: "",
       zoneBackground: "#fff",
       coordinates: []
     };
@@ -57,6 +58,9 @@ class DeliveryZones extends PureComponent {
             action="Save"
             model="Delivery Zone"
             backRoute="/admin/delivery-zones"
+            handleAction={() => {
+              message.success(`${this.state.zoneName} created!`);
+            }}
           />
           <AdminPageTitle title="New Delivery Zone" />
           <InputField
@@ -66,6 +70,14 @@ class DeliveryZones extends PureComponent {
               });
             }}
             labelName="Zone Name"
+          />
+          <TextAreaField 
+          setValue={zoneNotes => {
+            this.setState({
+              zoneNotes
+            });
+          }}
+          labelName="Notes"
           />
           <HighlightedFormField customTopMargin={"10px"}>
             <div className="input-wrap m-b-20">
