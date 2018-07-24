@@ -32,8 +32,9 @@ class DeliveryZones extends PureComponent {
     super(props);
 
     this.state = {
+      zoneName: "",
       zoneBackground: "#fff",
-      coordinates: [],
+      coordinates: []
     };
   }
 
@@ -42,11 +43,11 @@ class DeliveryZones extends PureComponent {
   };
 
   handleSaveCoordinates = coordinates => {
-    console.log("coordinates array", coordinates)
+    console.log("coordinates array", coordinates);
     this.setState({
       coordinates
-    })
-  }
+    });
+  };
 
   render() {
     return (
@@ -58,7 +59,14 @@ class DeliveryZones extends PureComponent {
             backRoute="/admin/delivery-zones"
           />
           <AdminPageTitle title="New Delivery Zone" />
-          <InputField labelName="Zone Name" />
+          <InputField
+            setValue={zoneName => {
+              this.setState({
+                zoneName
+              });
+            }}
+            labelName="Zone Name"
+          />
           <HighlightedFormField customTopMargin={"10px"}>
             <div className="input-wrap m-b-20">
               <label>Zone Color</label>
@@ -70,11 +78,22 @@ class DeliveryZones extends PureComponent {
           </HighlightedFormField>
 
           <HighlightedFormField highlightText="Map your zone coordinates">
-             <MapZone updating={this.state.updating} currentCoordinateSet={this.state.coordinates} deleteCoordinates={() => { this.setState({ coordinates: [] }) }} saveCoordinates={(coordinates) => this.handleSaveCoordinates(coordinates)} color={this.state.zoneBackground} />
+            <MapZone
+              height="400px"
+              id="devzone"
+              updating={this.state.updating}
+              currentCoordinateSet={this.state.coordinates}
+              deleteCoordinates={() => {
+                this.setState({ coordinates: [] });
+              }}
+              saveCoordinates={coordinates =>
+                this.handleSaveCoordinates(coordinates)
+              }
+              color={this.state.zoneBackground}
+            />
           </HighlightedFormField>
 
-      
-          {/* <AdminInfoPanel contentId="" createdOn="" lastUpdated="">
+          <AdminInfoPanel contentId="" createdOn="" lastUpdated="">
             <div className="admin-info__item admin-info__item--active">
               ID: -
             </div>
@@ -82,7 +101,7 @@ class DeliveryZones extends PureComponent {
               Created On: -
             </div>
             <div className="admin-info__item ">Last Updated: -</div>
-          </AdminInfoPanel> */}
+          </AdminInfoPanel>
         </AdminTheme>
       </div>
     );
