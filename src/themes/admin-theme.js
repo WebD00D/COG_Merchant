@@ -11,7 +11,7 @@ import "../layouts/fcss.css";
 import "../layouts/components.css";
 import "../layouts/admin.css";
 
-import { Avatar, Badge } from 'antd';
+import { Avatar, Badge, Button, Icon } from 'antd';
 
 
 import InputField from "../components/InputField";
@@ -48,11 +48,14 @@ class AdminTheme extends PureComponent {
                 <Link to="/admin/merchants">
                     <i className="fa fa-sliders" aria-hidden="true"></i>Settings
                 </Link>
+               
+                
                 <Link className="admin__current-user" to="/admin/merchants">
                     <span style={{backgroundColor: "#f5f5f5"}}>
                     <Badge count={4}><Avatar shape="circle" icon="user" /></Badge>
                     </span>
                 </Link>
+                
             </div>
         </div>
         <div className="admin__content">

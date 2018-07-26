@@ -54,32 +54,56 @@ class CourierRegistration extends React.Component {
 
   handleRegistration() {
     this.setState({ showSpin: true });
-    const courierId = createId(`COURIER`);
 
-    // DO FIREBASE STUFF HEREEEEE...
+    fire
+      .auth()
+      .createUserWithEmailAndPassword(
+        this.state.loginEmail,
+        this.state.loginPassword
+      )
+      .then(
+        function(user) {
+          message.success(`Courier ${user.uid} created!`);
 
-    // THEN ONCE FINISHED UPDATE STATE...
+          const newUser = {
+            authenticated: true,
+            id: user.uid,
+            type: `COURIER`,
+            email: this.state.loginEmail,
+            name: this.state.contactPerson
+          };
 
-    const user = {
-      authenticated: true,
-      id: courierId,
-      type: `COURIER`,
-      email: this.state.loginEmail,
-      name: this.state.contactPerson
-    };
+          const newCourier = {
+            id: user.uid,
+            contactName: this.state.contactPerson,
+            contactEmail: this.state.email,
+            contactPhone: this.state.phone,
+            city: this.state.city,
+            state: this.state.usState,
+            zip: this.state.zip,
+            authenticationEmail: this.state.loginEmail
+          };
 
-    const courier = {
-      id: courierId,
-      contactName: this.state.contactPerson,
-      contactEmail: this.state.email,
-      contactPhone: this.state.phone,
-      city: this.state.city,
-      state: this.state.usState,
-      zip: this.state.zip,
-      authenticationEmail: this.state.loginEmail
-    };
+           // SAVE USER / COURIER PROPS TO DB
+          var updates = {};
+          updates["/users/" + user.uid] = newUser;
+          updates["/couriers/" + user.uid] = newCourier;
+       
+          fire
+            .database()
+            .ref()
+            .update(updates);
 
-    this.props.createCourier(user, courier);
+          this.setState({ showSpin: false });
+          this.props.createCourier(newUser, newCourier);
+        }.bind(this)
+      )
+      .catch(function(error) {
+        // handle errors.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        message.error(`Error: ${errorCode} - ${errorMessage}`);
+      });
   }
 
   handleStepOne() {
@@ -99,7 +123,7 @@ class CourierRegistration extends React.Component {
           label="Contact Person"
           status=""
           helpText=""
-          defaultValue={this.state.phone}
+          defaultValue={this.state.contactPerson}
           handleChange={val => {
             this.setState({ contactPerson: val });
           }}
@@ -201,13 +225,11 @@ class CourierRegistration extends React.Component {
     const { current } = this.state;
 
     // this.props.user.authenticated ? <Redirect /> : ""
-  
-    if ( this.props.user.authenticated ) {
-      return (
-        <Redirect to="/admin/dashboard" />
-      )
-    } 
-    
+
+    if (this.props.user.authenticated) {
+      return <Redirect to="/admin/dashboard" />;
+    }
+
     return (
       <div className="auth-body">
         <img
@@ -243,7 +265,6 @@ class CourierRegistration extends React.Component {
                         type="primary"
                         onClick={() => {
                           this.handleRegistration();
-                          message.success("Courier created!");
                         }}
                       >
                         Done
