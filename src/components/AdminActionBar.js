@@ -43,6 +43,7 @@ class AdminActionBar extends PureComponent {
 
         {this.props.searchBar ? (
           <InputField
+            setValue={ (val) => console.log("SETTING VALUE") }
             placeholder={this.props.inputPlaceholder}
             wrapperWidth={wrapperWidth}
           />

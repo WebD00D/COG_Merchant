@@ -11,10 +11,7 @@ import "../layouts/fcss.css";
 import "../layouts/components.css";
 import "../layouts/admin.css";
 
-import { Avatar, Badge, Button, Icon } from 'antd';
-
-
-import InputField from "../components/InputField";
+import { Avatar, Badge, Dropdown, Menu, Button, Icon } from "antd";
 
 class AdminTheme extends PureComponent {
   constructor(props) {
@@ -22,48 +19,90 @@ class AdminTheme extends PureComponent {
   }
 
   render() {
+    const menu = (
+      <Menu>
+        <Menu.Item>
+          <a target="_blank" href="#">
+            {" "}
+            <Icon type="profile" /> Profile
+          </a>
+        </Menu.Item>
+        <Menu.Item>
+          <a target="_blank" href="#">
+            {" "}
+            <Icon type="customer-service" /> Support
+          </a>
+        </Menu.Item>
+        <Menu.Item>
+          <a target="_blank" href="#">
+            {" "}
+            <Icon type="logout" /> Signout
+          </a>
+        </Menu.Item>
+      </Menu>
+    );
+
     return (
       <div className="admin">
         <div className="admin__menu">
-            <div className="admin__menu-wrap">
-                <div className="admin__logo-wrap">
-                    <img style={{height: "40px"}} src={require("../layouts/images/logo@2x.png")}/>
-                    <div className="theme-type">ADMIN</div>
-                </div>
-                <Link to="/admin/dashboard">
-                    <i className="fa fa-cutlery" aria-hidden="true"></i>Orders
-                </Link>
-                <Link to="/admin/merchant-list">
-                    <i className="fa fa-institution" aria-hidden="true"></i>Merchants
-                </Link>
-                <Link to="/admin/delivery-zones">
-                    <i className="fa fa-bicycle" aria-hidden="true"></i>Delivery Zones
-                </Link>
-                <Link to="/admin/merchants">
-                    <i className="fa fa-users" aria-hidden="true"></i>Users
-                </Link>
-                <Link to="/admin/merchants">
-                    <i className="fa fa-calendar" aria-hidden="true"></i>Schedule
-                </Link>
-                <Link to="/admin/merchants">
-                    <i className="fa fa-sliders" aria-hidden="true"></i>Settings
-                </Link>
-               
-                
-                <Link className="admin__current-user" to="/admin/merchants">
-                    <span style={{backgroundColor: "#f5f5f5"}}>
-                    <Badge count={4}><Avatar shape="circle" icon="user" /></Badge>
-                    </span>
-                </Link>
-                
+          <div className="admin__menu-wrap">
+            <div className="admin__logo-wrap">
+              <img
+                style={{ height: "40px" }}
+                src={require("../layouts/images/logo@2x.png")}
+              />
+              <div className="theme-type">ADMIN</div>
             </div>
+            <Link to="/admin/dashboard">
+              <i className="fa fa-cutlery" aria-hidden="true" />Orders
+            </Link>
+            <Link to="/admin/merchant-list">
+              <i className="fa fa-institution" aria-hidden="true" />Merchants
+            </Link>
+            <Link to="/admin/delivery-zones">
+              <i className="fa fa-bicycle" aria-hidden="true" />Delivery Zones
+            </Link>
+            <Link to="/admin/merchants">
+              <i className="fa fa-users" aria-hidden="true" />Users
+            </Link>
+            <Link to="/admin/merchants">
+              <i className="fa fa-calendar" aria-hidden="true" />Schedule
+            </Link>
+            <Link to="/admin/merchants">
+              <i className="fa fa-sliders" aria-hidden="true" />Settings
+            </Link>
+
+            <Dropdown overlay={menu} placement="topCenter">
+              <div className="admin-theme__user" style={{ height: "80px" }}>
+                <div className="admin__current-user">
+                  <Badge count={4}>
+                    <Avatar shape="circle" icon="user" />
+                  </Badge>
+                </div>
+                <div>{this.props.courier.company}</div>
+              </div>
+            </Dropdown>
+          </div>
         </div>
         <div className="admin__content">
-            <div className="admin__content-wrap">{ this.props.children }</div>
+          <div className="admin__content-wrap">{this.props.children}</div>
         </div>
       </div>
     );
   }
 }
 
-export default AdminTheme;
+const mapStateToProps = ({ user, courier }) => {
+  return { user, courier };
+};
+
+//   const mapDispatchToProps = dispatch => {
+//     return {
+//       createCourier: (user, courier) =>
+//         dispatch({
+//           type: `LOGOUT_USER`
+//         })
+//     };
+//   };
+
+export default connect(mapStateToProps)(AdminTheme);

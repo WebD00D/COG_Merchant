@@ -75,6 +75,7 @@ class CourierRegistration extends React.Component {
 
           const newCourier = {
             id: user.uid,
+            company: this.state.company,
             contactName: this.state.contactPerson,
             contactEmail: this.state.email,
             contactPhone: this.state.phone,

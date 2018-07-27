@@ -18,10 +18,17 @@ class DeliveryZoneItems extends PureComponent {
   }
 
   render() {
+
+    const zones = this.props.zones && Object.keys(this.props.zones).map(key => {
+      
+      return (
+        <DeliveryZoneItem zone={this.props.zones[key].name} color={this.props.zones[key].color} />
+      )
+    })
+
     return (
       <div className="model-list">
-        <DeliveryZoneItem zone="Zone 1" color="#ffc107" />
-        <DeliveryZoneItem zone="Zone 2" color="#00bcd4" />
+      {zones}
       </div>
     );
   }

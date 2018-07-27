@@ -94,7 +94,7 @@ class MapZone extends PureComponent {
               lat: position.coords.latitude,
               lng: position.coords.longitude
             },
-            zoom: 13
+            zoom: 10
           });
 
           // CONSTRUCT POLYGON

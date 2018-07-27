@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
-import Link from "gatsby-link";
+import { Link } from "gatsby-link";
+
 import fire from "../../fire";
 import { Route, Redirect } from "react-router-dom";
 import cx from "classnames";
@@ -24,10 +25,12 @@ import TextAreaField from "../../components/TextareaField";
 import SelectField from "../../components/SelectField";
 import HighlightedFormField from "../../components/HighlightedFormField";
 
+import { createId, getQueryVariable } from "../../utils/app-utils";
+
 import { TimePicker, Checkbox, Divider, message } from "antd";
 import moment from "moment";
 
-class DeliveryZones extends PureComponent {
+class DeliveryZone extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -35,8 +38,26 @@ class DeliveryZones extends PureComponent {
       zoneName: "",
       zoneNotes: "",
       zoneBackground: "#fff",
-      coordinates: []
+      coordinates: [],
+      zoneSaved: false,
+
+      id: "",
+      saved: "",
+      updated: ""
     };
+  }
+
+  componentWillMount() {
+    // check param for zone id.
+
+    const zoneId = getQueryVariable("zone");
+
+    if (zoneId) {
+      // if zone, filter through store
+      // and set state..
+
+     
+    }
   }
 
   handleChangeComplete = color => {
@@ -50,7 +71,40 @@ class DeliveryZones extends PureComponent {
     });
   };
 
+  saveDeliveryZone() {
+    const deliveryZoneId = createId("ZONE");
+
+    const saveDate = Date.now();
+
+    const newZone = {
+      id: deliveryZoneId,
+      name: this.state.zoneName,
+      notes: this.state.zoneNotes,
+      zoneBackground: this.state.zoneBackground,
+      coordinates: this.state.coordinates
+    };
+
+    var updates = {};
+    updates["/zones/" + deliveryZoneId] = newZone;
+
+    fire
+      .database()
+      .ref()
+      .update(updates);
+
+  
+    this.setState({
+      id: deliveryZoneId,
+      zoneSaved: true
+    });
+
+    // PUSH ZONE TO STORE
+
+    message.success(`${this.state.zoneName} created!`);
+  }
+
   render() {
+    
     return (
       <div>
         <AdminTheme>
@@ -58,9 +112,7 @@ class DeliveryZones extends PureComponent {
             action="Save"
             model="Delivery Zone"
             backRoute="/admin/delivery-zones"
-            handleAction={() => {
-              message.success(`${this.state.zoneName} created!`);
-            }}
+            handleAction={() => this.saveDeliveryZone()}
           />
           <AdminPageTitle title="New Delivery Zone" />
           <InputField
@@ -71,13 +123,13 @@ class DeliveryZones extends PureComponent {
             }}
             labelName="Zone Name"
           />
-          <TextAreaField 
-          setValue={zoneNotes => {
-            this.setState({
-              zoneNotes
-            });
-          }}
-          labelName="Notes"
+          <TextAreaField
+            setValue={zoneNotes => {
+              this.setState({
+                zoneNotes
+              });
+            }}
+            labelName="Notes"
           />
           <HighlightedFormField customTopMargin={"10px"}>
             <div className="input-wrap m-b-20">
@@ -107,12 +159,20 @@ class DeliveryZones extends PureComponent {
 
           <AdminInfoPanel contentId="" createdOn="" lastUpdated="">
             <div className="admin-info__item admin-info__item--active">
-              ID: -
+              ID: {this.state.id ? this.state.id : "-"}
             </div>
             <div className="admin-info__item admin-info__item--active">
-              Created On: -
+              Created On:{" "}
+              {this.state.saved.trim() != ""
+                ? moment(this.state.saved).format("MM-DD-YYYY")
+                : "-"}
             </div>
-            <div className="admin-info__item ">Last Updated: -</div>
+            <div className="admin-info__item ">
+              Last Updated:{" "}
+              {this.state.updated.trim() != ""
+                ? moment(this.state.updates).format("MM-DD-YYYY")
+                : "-"}
+            </div>
           </AdminInfoPanel>
         </AdminTheme>
       </div>
@@ -120,4 +180,18 @@ class DeliveryZones extends PureComponent {
   }
 }
 
-export default DeliveryZones;
+const mapStateToProps = ({ user, courier, zones }) => {
+  return { user, courier, zones };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addNewZone: zone =>
+      dispatch({
+        type: `ADD_ZONE`,
+        zone
+      })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeliveryZone);
