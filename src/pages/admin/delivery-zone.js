@@ -47,7 +47,7 @@ class DeliveryZone extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // check param for zone id.
 
     const zoneId = getQueryVariable("zone");
