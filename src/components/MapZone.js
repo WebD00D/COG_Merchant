@@ -4,10 +4,7 @@ import cx from "classnames";
 
 const GOOGLE_API_KEY = "AIzaSyBu0azHVEJf3dYGGq1s8Ck3LMZKFZIRORI";
 
-import {  Button, Icon, Spin } from "antd";
-
-
-
+import { Button, Icon, Spin } from "antd";
 
 class MapZone extends PureComponent {
   constructor(props) {
@@ -30,57 +27,7 @@ class MapZone extends PureComponent {
     this.setState({
       loading: false
     });
-  }
 
-
-
-  _handlePlaceMarker(location, map) {
-    let marker = new google.maps.Marker({
-      position: location,
-      map: map
-    });
-  }
-
-  _handleSetSelection(shape) {
-    console.log("shape is clicked", shape);
-    // this._handleClearSelection(shape);
-
-    if (this.selectedShape) {
-      this.selectedShape.setEditable(false);
-    }
-
-    shape.setEditable(true);
-    this.selectedShape = shape;
-  }
-
-  _handleDeleteZone() {
-    if (this.selectedShape) {
-      this.selectedShape.setMap(null);
-      this.selectedShape = null;
-    }
-
-    this.props.deleteCoordinates();
-  }
-
-  _getPolygonCoords = function(newShape) {
-    var len = newShape.getPath().getLength();
-
-    let coordArray = [];
-
-    for (var i = 0; i < len; i++) {
-      coordArray.push(
-        newShape
-          .getPath()
-          .getAt(i)
-          .toUrlValue(6)
-      );
-    }
-
-    console.log("COORD ARRAY", coordArray);
-    this.props.saveCoordinates(coordArray);
-  };
-
-  render() {
     const zoneColor = this.props.color;
 
     console.log("CURRENT SAVED COORDS", this.props.currentCoordinateSet);
@@ -89,13 +36,16 @@ class MapZone extends PureComponent {
       window.navigator.geolocation.getCurrentPosition(
         function(position) {
           // initializes the map
-          let map = new google.maps.Map(document.getElementById(this.props.id), {
-            center: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            },
-            zoom: 10
-          });
+          let map = new google.maps.Map(
+            document.getElementById(this.props.id),
+            {
+              center: {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+              },
+              zoom: 10
+            }
+          );
 
           // CONSTRUCT POLYGON
           // NOTE: We'd run this block of code for each group of zone pulled in from the db..
@@ -185,26 +135,77 @@ class MapZone extends PureComponent {
         }.bind(this)
       );
     }
+  }
 
-  
+  _handlePlaceMarker(location, map) {
+    let marker = new google.maps.Marker({
+      position: location,
+      map: map
+    });
+  }
 
+  _handleSetSelection(shape) {
+    console.log("shape is clicked", shape);
+    // this._handleClearSelection(shape);
+
+    if (this.selectedShape) {
+      this.selectedShape.setEditable(false);
+    }
+
+    shape.setEditable(true);
+    this.selectedShape = shape;
+  }
+
+  _handleDeleteZone() {
+    if (this.selectedShape) {
+      this.selectedShape.setMap(null);
+      this.selectedShape = null;
+    }
+
+    this.props.deleteCoordinates();
+  }
+
+  _getPolygonCoords = function(newShape) {
+    var len = newShape.getPath().getLength();
+
+    let coordArray = [];
+
+    for (var i = 0; i < len; i++) {
+      coordArray.push(
+        newShape
+          .getPath()
+          .getAt(i)
+          .toUrlValue(6)
+      );
+    }
+
+    console.log("COORD ARRAY", coordArray);
+    this.props.saveCoordinates(coordArray);
+  };
+
+  render() {
     return (
       <div className="w-100p">
         <div className="input-wrap m-b-20">
-            <label>DRAW ZONE POLYGON {this.state.updating}</label>
-           </div>
-           <div
-          style={{ height: this.props.height, marginBottom: "30px", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}
+          <label>DRAW ZONE POLYGON {this.state.updating}</label>
+        </div>
+        <div
+          style={{
+            height: this.props.height,
+            marginBottom: "30px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column"
+          }}
           id={this.props.id}
         >
-
           <div className="input-wrap m-b-20">
             <label>... LOADING MAP ...</label>
-           </div>
-           <Spin />
-
-
-        </div>        <div className="m-t-20 m-b-20">
+          </div>
+          <Spin />
+        </div>{" "}
+        <div className="m-t-20 m-b-20">
           <Button type="danger" onClick={() => this._handleDeleteZone()}>
             Delete Zone <Icon type="close" />
           </Button>
