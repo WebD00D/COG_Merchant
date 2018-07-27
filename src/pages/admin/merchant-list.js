@@ -58,20 +58,33 @@ class MerchantList extends PureComponent {
         <MerchantListActions />
         <MerchantListItems />
         
-        <AdminInfoPanel  contentId="" createdOn="" lastUpdated="">
+        <AdminInfoPanel contentId="" createdOn="" lastUpdated="">
             <div className="admin-info__item admin-info__item--active">
-                Merchant Info
+              <Icon
+                style={{ position: "absolute", right: "60px" }}
+                type="info-circle-o"
+              />
+              <h2>Merchants 101</h2>
+              <Divider />
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </p>
+              <p>
+                Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                cupidatat non proident, sunt in culpa qui officia deserunt
+                mollit anim id est laborum.
+              </p>
+              <h3>Still have questions?</h3>
+              <Button type="primary">
+                Contact support{" "}
+                <Icon style={{ color: "#FFF" }} type="customer-service" />
+              </Button>
             </div>
-            <div className="admin-info__item ">
-                Login Info
-            </div>
-            <div className="admin-info__item ">
-                API Settings
-            </div>
-            <div className="admin-info__item ">
-                Billing Info
-            </div>
-        </AdminInfoPanel>
+          </AdminInfoPanel>
        
         </AdminTheme>
       </div>
