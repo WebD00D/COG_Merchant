@@ -85,8 +85,8 @@ class MapZone extends PureComponent {
 
     console.log("CURRENT SAVED COORDS", this.props.currentCoordinateSet);
 
-    if (navigator && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
+    if (window.navigator && window.navigator.geolocation) {
+      window.navigator.geolocation.getCurrentPosition(
         function(position) {
           // initializes the map
           let map = new google.maps.Map(document.getElementById(this.props.id), {
