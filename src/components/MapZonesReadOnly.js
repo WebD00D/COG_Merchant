@@ -82,8 +82,8 @@ class MapZonesReadOnly extends PureComponent {
 
     console.log(" SAMPLE COORDINATE SET ", this.props.coordinateSet);
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
+    if (window.navigator.geolocation) {
+      window.navigator.geolocation.getCurrentPosition(
         function(position) {
           // initializes the map
           let map = new google.maps.Map(
