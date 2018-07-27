@@ -11,7 +11,7 @@ import "../../layouts/fcss.css";
 import "../../layouts/components.css";
 
 import 'antd/dist/antd.css';
-import { Menu, Dropdown, Button, Icon, message, Alert } from 'antd';
+import { Menu, Dropdown, Button, Icon, message, Alert, Divider } from 'antd';
 
 
 import AdminTheme from "../../themes/admin-theme";
