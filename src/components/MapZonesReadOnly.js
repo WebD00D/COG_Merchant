@@ -32,8 +32,6 @@ class MapZonesReadOnly extends PureComponent {
 
     const zoneColor = this.props.color;
 
-    console.log(" SAMPLE COORDINATE SET ", this.props.coordinateSet);
-
     if (window.navigator.geolocation) {
       window.navigator.geolocation.getCurrentPosition(
         function(position) {
@@ -107,6 +105,75 @@ class MapZonesReadOnly extends PureComponent {
           aNewShape.setMap(map);
 
           // END CONSTRUCT POLYGON
+        }.bind(this),
+        function(error) {
+          let map = new google.maps.Map(
+            document.getElementById(this.props.id),
+            {
+              center: {
+                lat: 34.0207289,
+                lng: -118.6926083
+              },
+              zoom: 10
+            }
+          );
+
+          this.props.coordinateSet &&
+            Object.keys(this.props.coordinateSet).map(key => {
+              console.log("SINGLE COORDINATE", this.props.coordinateSet[key]);
+              const zoneObj = this.props.coordinateSet[key];
+              let zoneCoordinates = [];
+
+              zoneObj.coordinates.forEach(c => {
+                console.log(`coordinate pair for ${zoneObj.name}`, c);
+                let splitCoord = c.split(",");
+                const lat = Number(splitCoord[0]);
+                const long = Number(splitCoord[1]);
+                zoneCoordinates.push(new google.maps.LatLng(lat, long));
+              });
+
+              console.log("FINSIHED LOOP");
+
+              let zoneShape = new google.maps.Polygon({
+                paths: zoneCoordinates,
+                draggable: false,
+                editable: false,
+                strokeColor: zoneObj.color,
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: zoneObj.color,
+                fillOpacity: 0.9,
+                zoneTitle: zoneObj.name
+              });
+
+              zoneShape.setMap(map);
+            });
+
+          // CONSTRUCT POLYGON
+          // NOTE: We'd run this block of code for each group of zone pulled in from the db..
+
+          var aNewShapeCoords = [];
+          this.props.currentCoordinateSet &&
+            this.props.currentCoordinateSet.forEach(c => {
+              let splitCoord = c.split(",");
+              const lat = Number(splitCoord[0]);
+              const long = Number(splitCoord[1]);
+              aNewShapeCoords.push(new google.maps.LatLng(lat, long));
+            });
+
+          let aNewShape = new google.maps.Polygon({
+            paths: aNewShapeCoords,
+            draggable: false,
+            editable: true,
+            strokeColor: "#000000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: zoneColor,
+            fillOpacity: 0.9,
+            zoneTitle: "Zone 1"
+          });
+
+          aNewShape.setMap(map);
         }.bind(this)
       );
     }

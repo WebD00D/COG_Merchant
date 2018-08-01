@@ -33,6 +33,9 @@ class MapZone extends PureComponent {
     console.log("CURRENT SAVED COORDS", this.props.currentCoordinateSet);
 
     if (window.navigator.geolocation) {
+
+
+      console.log("WE HAVE IT")
       window.navigator.geolocation.getCurrentPosition(
         function(position) {
           // initializes the map
@@ -132,8 +135,111 @@ class MapZone extends PureComponent {
 
           all_overlays.push(event);
           all_overlays.push();
+        }.bind(this), 
+        function(error){
+
+          console.log("MAPZONE.JS", error)
+          let map = new google.maps.Map(document.getElementById(this.props.id), {
+            center: {
+              lat: 34.0207289,
+              lng: -118.6926083
+            },
+            zoom: 7
+          });
+
+           // CONSTRUCT POLYGON
+          // NOTE: We'd run this block of code for each group of zone pulled in from the db..
+
+          var aNewShapeCoords = [];
+          this.props.currentCoordinateSet &&
+            this.props.currentCoordinateSet.forEach(c => {
+              let splitCoord = c.split(",");
+              const lat = Number(splitCoord[0]);
+              const long = Number(splitCoord[1]);
+              aNewShapeCoords.push(new google.maps.LatLng(lat, long));
+            });
+
+          let aNewShape = new google.maps.Polygon({
+            paths: aNewShapeCoords,
+            draggable: false,
+            editable: true,
+            strokeColor: zoneColor,
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: zoneColor,
+            fillOpacity: 0.9,
+            zoneTitle: "Zone 1"
+          });
+
+          aNewShape.setMap(map);
+          google.maps.event.addListener(
+            aNewShape,
+            "click",
+            function(event) {
+              this._handleSetSelection(aNewShape);
+
+              console.log("NEW SHAPE", aNewShape);
+              this._getPolygonCoords(aNewShape);
+            }.bind(this)
+          );
+          // END CONSTRUCT POLYGON
+
+          var all_overlays = [];
+          var drawingManager = new google.maps.drawing.DrawingManager({
+            drawingMode: google.maps.drawing.OverlayType.POLYGON,
+            drawingControl: true,
+            drawingControlOptions: {
+              position: google.maps.ControlPosition.TOP_CENTER,
+              drawingModes: [google.maps.drawing.OverlayType.POLYGON]
+            },
+
+            polygonOptions: {
+              clickable: true,
+              draggable: false,
+              editable: false,
+              fillColor: zoneColor,
+              fillOpacity: 0.9,
+              strokeColor: "#000000",
+              strokeOpacity: 0.8
+            }
+          });
+
+          drawingManager.setMap(map);
+
+          google.maps.event.addListener(
+            drawingManager,
+            "overlaycomplete",
+            function(event) {
+              all_overlays.push(event);
+              drawingManager.setDrawingMode(null);
+
+              var newShape = event.overlay;
+              newShape.type = event.type;
+
+              this._getPolygonCoords(newShape);
+
+              google.maps.event.addListener(
+                newShape,
+                "click",
+                function() {
+                  this._handleSetSelection(newShape);
+                }.bind(this)
+              );
+
+              this._handleSetSelection(newShape);
+            }.bind(this)
+          );
+
+          all_overlays.push(event);
+          all_overlays.push();
+
+    
+         
+
+
+
         }.bind(this)
-      );
+      )
     }
   }
 

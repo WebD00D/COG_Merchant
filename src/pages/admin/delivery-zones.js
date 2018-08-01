@@ -78,7 +78,8 @@ class DeliveryZones extends PureComponent {
       const zoneObj = {
         coordinates: this.props.zones[key].coordinates,
         color: this.props.zones[key].zoneBackground,
-        name: this.props.zones[key].name
+        name: this.props.zones[key].name,
+        notes: this.props.zones[key].notes
       };
       savedZonesArray.push(zoneObj);
     });
