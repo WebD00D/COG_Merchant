@@ -30,7 +30,12 @@ import HighlightedFormField from "../../components/HighlightedFormField";
 class DeliveryZones extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = {};
+
+    this.handleZoneHighlighting = this.handleZoneHighlighting.bind(this);
+
+    this.state = {
+      highlightedZones: []
+    };
   }
 
   componentDidMount() {
@@ -38,43 +43,35 @@ class DeliveryZones extends PureComponent {
       .database()
       .ref("/zones/")
       .once("value")
-      .then(function(snapshot) {
-        this.props.setZones(snapshot.val())
-      }.bind(this));
+      .then(
+        function(snapshot) {
+          this.props.setZones(snapshot.val());
+        }.bind(this)
+      );
+  }
+
+  handleZoneHighlighting(zone) {
+    let cpyHighlightedZones = this.props.highlightedZones;
+    let zoneAlreadyHighlighted = _.filter(cpyHighlightedZones, {
+      name: zone.name
+    });
+
+    if (zoneAlreadyHighlighted == 0) {
+      cpyHighlightedZones.push(zone);
+    } else {
+      let indexOfZone = _.findIndex(cpyHighlightedZones, function(o) {
+        return o.name == zone.name;
+      });
+      cpyHighlightedZones.splice(indexOfZone, 1);
+    }
+
+    this.props.setHighlightedZones(cpyHighlightedZones)
+    this.forceUpdate();
   }
 
   render() {
-    const sampleCoordinates = [
-      {
-        coordinates: [
-          "33.891012,-118.338042",
-          "33.888162,-118.3916",
-          "33.853242,-118.395548",
-          "33.849963,-118.353835",
-          "33.86151,-118.330317"
-        ],
-        color: "#ffc107",
-        name: "Zone 1"
-      },
-      {
-        coordinates: [
-          "33.889661,-118.308401",
-          "33.787001,-118.305655",
-          "33.80412,-118.142233",
-          "33.959172,-118.195791",
-          "33.935249,-118.275442"
-        ],
-        color: "#00bcd4",
-        name: "Zone 2"
-      }
-    ];
-
-    console.log("ZONES", this.props.zones);
-
-    let savedZonesArray = [];
-
-    const savedZones = Object.keys(this.props.zones).map(key => {
-      console.log(this.props.zones[key]);
+    let savedZonesArray = []; // this is for showing the list of all the zones.
+    Object.keys(this.props.zones).map(key => {
       const zoneObj = {
         coordinates: this.props.zones[key].coordinates,
         color: this.props.zones[key].zoneBackground,
@@ -83,6 +80,9 @@ class DeliveryZones extends PureComponent {
       };
       savedZonesArray.push(zoneObj);
     });
+
+    const highlight = this.state.highlightedZones;
+
 
     return (
       <div>
@@ -97,14 +97,16 @@ class DeliveryZones extends PureComponent {
           <AdminPageTitle title="Delivery Zones" />
 
           <MapZonesReadOnly
-            coordinateSet={savedZonesArray}
             id="delivery-zone"
             height="400px"
           />
 
-          <DeliveryZoneItems zones={savedZonesArray} />
+          <DeliveryZoneItems
+            highlightZone={ zone => { console.log("delivery zone gets fired"); this.handleZoneHighlighting(zone)} }
+            zones={savedZonesArray}
+          />
 
-          <AdminInfoPanel contentId="" createdOn="" lastUpdated="">
+          {/* <AdminInfoPanel contentId="" createdOn="" lastUpdated="">
             <div className="admin-info__item admin-info__item--active">
               <Icon
                 style={{ position: "absolute", right: "60px" }}
@@ -130,15 +132,15 @@ class DeliveryZones extends PureComponent {
                 <Icon style={{ color: "#FFF" }} type="customer-service" />
               </Button>
             </div>
-          </AdminInfoPanel>
+          </AdminInfoPanel> */}
         </AdminTheme>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ user, courier, zones }) => {
-  return { user, courier, zones };
+const mapStateToProps = ({ user, courier, zones, highlightedZones }) => {
+  return { user, courier, zones, highlightedZones };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -147,7 +149,13 @@ const mapDispatchToProps = dispatch => {
       dispatch({
         type: `SET_ZONES`,
         zones
+      }),
+    setHighlightedZones: zones =>
+      dispatch({
+        type: `SET_HIGHLIGHTED_ZONES`,
+        zones
       })
+
   };
 };
 

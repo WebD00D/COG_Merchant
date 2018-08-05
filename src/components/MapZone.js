@@ -30,12 +30,10 @@ class MapZone extends PureComponent {
 
     const zoneColor = this.props.color;
 
-    console.log("CURRENT SAVED COORDS", this.props.currentCoordinateSet);
 
     if (window.navigator.geolocation) {
 
 
-      console.log("WE HAVE IT")
       window.navigator.geolocation.getCurrentPosition(
         function(position) {
           // initializes the map
@@ -81,7 +79,6 @@ class MapZone extends PureComponent {
             function(event) {
               this._handleSetSelection(aNewShape);
 
-              console.log("NEW SHAPE", aNewShape);
               this._getPolygonCoords(aNewShape);
             }.bind(this)
           );
@@ -138,7 +135,6 @@ class MapZone extends PureComponent {
         }.bind(this), 
         function(error){
 
-          console.log("MAPZONE.JS", error)
           let map = new google.maps.Map(document.getElementById(this.props.id), {
             center: {
               lat: 34.0207289,
@@ -178,7 +174,6 @@ class MapZone extends PureComponent {
             function(event) {
               this._handleSetSelection(aNewShape);
 
-              console.log("NEW SHAPE", aNewShape);
               this._getPolygonCoords(aNewShape);
             }.bind(this)
           );

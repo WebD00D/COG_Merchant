@@ -17,10 +17,16 @@ const reducer = (state, action) => {
       zones: [...state.zones, action.zone]
     })
   }
-
+  
   if ( action.type === `SET_ZONES` ) {
     return Object.assign({}, state, {
       zones: action.zones 
+    })
+  }
+
+  if ( action.type === `SET_HIGHLIGHTED_ZONES` ) {
+    return Object.assign({}, state, {
+      highlightedZones: action.zones
     })
   }
 
@@ -53,7 +59,7 @@ const initialState = {
     authenticationEmail: "rva.christian91@gmail.com"
   },
 
-
+  highlightedZones: [],
   zones: [],
   merchants: [],
   twinjetAPI: null
@@ -62,8 +68,8 @@ const initialState = {
 const createStore = () =>
   reduxCreateStore(
     reducer,
-    initialState
-   // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    initialState,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   );
 export default createStore;
 

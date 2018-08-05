@@ -57,19 +57,19 @@ class AdminTheme extends PureComponent {
               <i className="fa fa-cutlery" aria-hidden="true" />Orders
             </Link>
             <Link to="/admin/merchant-list">
-              <i className="fa fa-institution" aria-hidden="true" />Merchants
+              <i className="fa fa-shopping-basket" aria-hidden="true" />Merchants
             </Link>
             <Link to="/admin/delivery-zones">
               <i className="fa fa-bicycle" aria-hidden="true" />Delivery Zones
             </Link>
-            <Link to="/admin/merchants">
-              <i className="fa fa-users" aria-hidden="true" />Users
+            <Link to="/admin/services">
+              <i className="fa fa-exchange" aria-hidden="true" />Services
+            </Link>
+            <Link to="/admin/rates">
+              <i className="fa fa-money" aria-hidden="true" />Rates
             </Link>
             <Link to="/admin/merchants">
-              <i className="fa fa-calendar" aria-hidden="true" />Schedule
-            </Link>
-            <Link to="/admin/merchants">
-              <i className="fa fa-sliders" aria-hidden="true" />Settings
+              <i className="fa fa-gear" aria-hidden="true" />Settings
             </Link>
 
             <Dropdown overlay={menu} placement="topCenter">

@@ -22,7 +22,6 @@ module.exports = props => {
     );
   }
 
-
   return (
 
     <html lang="en">

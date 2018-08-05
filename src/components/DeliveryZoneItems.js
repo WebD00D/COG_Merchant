@@ -18,22 +18,21 @@ class DeliveryZoneItems extends PureComponent {
   }
 
   render() {
+    const zones =
+      this.props.zones &&
+      Object.keys(this.props.zones).map(key => {
+        return (
+          <DeliveryZoneItem
+            handleClick={() => this.props.highlightZone(this.props.zones[key])}
+            key={key}
+            notes={this.props.zones[key].notes}
+            zone={this.props.zones[key].name}
+            color={this.props.zones[key].color}
+          />
+        );
+      });
 
-    
-    const zones = this.props.zones && Object.keys(this.props.zones).map(key => {
-
-      console.log(this.props.zones[key])
-      
-      return (
-        <DeliveryZoneItem key={key} notes={this.props.zones[key].notes} zone={this.props.zones[key].name} color={this.props.zones[key].color} />
-      )
-    })
-
-    return (
-      <div className="model-list">
-      {zones}
-      </div>
-    );
+    return <div className="model-list">{zones}</div>;
   }
 }
 

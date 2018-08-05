@@ -27,15 +27,14 @@ class DeliveryZoneItem extends PureComponent {
 
   render() {
 
-    console.log("this props", this.props)
     return (
-      <div className="model-list__row">
+      <div onClick={ () => this.props.handleClick() } className="model-list__row " style={{height: "50px", marginBottom: "12px", cursor: "pointer"}}>
         <div className="model-list__item model-list__item-lg">
-          <label>Name</label>
           <div style={{ color: this.props.color }}>{this.props.zone}</div>
+        
         </div>
-        <Button onClick={() => this.setState({ showDetailsModal: true })} style={{height: "20px", width: "30px", padding: "0px"}} type=""><Icon type="ellipsis" /></Button>
 
+        <div style={{backgroundColor: this.props.color, height: "15px", width: "15px", borderRadius: "50%"}}></div>
 
         <Modal
           okText="Delete Zone"
