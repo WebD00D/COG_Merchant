@@ -74,8 +74,6 @@ class DeliveryZone extends PureComponent {
   saveDeliveryZone() {
     const deliveryZoneId = createId("ZONE");
 
-    const saveDate = Date.now();
-
     const newZone = {
       id: deliveryZoneId,
       name: this.state.zoneName,
@@ -170,7 +168,7 @@ class DeliveryZone extends PureComponent {
             <div className="admin-info__item ">
               Last Updated:{" "}
               {this.state.updated.trim() != ""
-                ? moment(this.state.updates).format("MM-DD-YYYY")
+                ? moment(this.state.updated).format("MM-DD-YYYY")
                 : "-"}
             </div>
           </AdminInfoPanel>

@@ -1,8 +1,7 @@
 import React, { PureComponent } from "react";
-import Link from "gatsby-link";
 import fire from "../../fire";
 import { Route, Redirect } from "react-router-dom";
-import cx from "classnames";
+
 import _ from "lodash";
 import { connect } from "react-redux";
 import "whatwg-fetch";
@@ -20,81 +19,116 @@ import TextAreaField from "../../components/TextareaField";
 import SelectField from "../../components/SelectField";
 import HighlightedFormField from "../../components/HighlightedFormField";
 
-import { TimePicker, Checkbox, Divider,message } from "antd";
+import { TimePicker, Checkbox, Divider, message } from "antd";
 
 import { createId, getQueryVariable } from "../../utils/app-utils";
 
 import moment from "moment";
 
-class Service extends PureComponent {
+class Rate extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.saveService = this.saveService.bind(this);
+    this.saveRate = this.saveRate.bind(this);
 
     this.state = {
-      name: "",
+      service: "",
+      origin: "",
+      destination: "",
       price: 0,
-      description: "",
-      notes: "",
 
       id: "",
       saved: "",
       updated: ""
     };
-
   }
 
-  saveService() {
+  saveRate() {
+    // We'll prob need to save a in a few different ways...
+    // 1. Save my service type
+    // 2. Save full to a full list of rates
 
-    const serviceId = createId("SERVICE");
+    const rateId = createId("RATE");
 
-    const newService = {
-      id: serviceId,
-      name: this.state.name,
+    const newRate = {
+      id: rateId,
+      service: this.state.service,
+      origin: this.state.origin,
+      destination: this.state.destination,
       price: this.state.price,
-      description: this.state.description,
       lastUpdated: Date.now()
     };
 
     var updates = {};
-    updates["/service/" + serviceId] = newService;
+    updates["/rates/" + rateId] = newRate;
+ 
 
     fire
       .database()
       .ref()
       .update(updates);
 
-  
     this.setState({
-      id: serviceId,
+      id: rateId,
       saved: Date.now(),
       updated: Date.now()
     });
 
     // PUSH ZONE TO STORE
-    message.success(`${this.state.name} created!`);
-
+    message.success(`rate created!`);
   }
- 
 
   render() {
 
-    console.log(this.state)
+    let serviceOptions = [];
+
+    this.props.services && Object.keys(this.props.services).map( (key) => {
+        serviceOptions.push(this.props.services[key].name)
+    } )
+
+    let zoneOptions = [];
+    this.props.zones && Object.keys(this.props.zones).map( (key) => {
+        zoneOptions.push(this.props.zones[key].name)
+    })
+   
+
     return (
       <div>
         <AdminTheme>
           <AdminActionBar
-            handleAction={() => this.saveService()}
+            handleAction={() => this.saveRate()}
             action="Save"
-            model="Service"
-            backRoute="/admin/service-list"
+            model="Rate"
+            backRoute="/admin/rate-list"
           />
 
-          <AdminPageTitle title="New Service" />
-          <InputField setValue={ (val) => this.setState({ name: val }) } labelName="Service Name" />
-          <InputField setValue={ (val) => this.setState({ price: val }) } inputType="number" labelName="Base Price" />
-          <TextAreaField setValue={ (val) => this.setState({ description: val }) } labelName="Description" />
+          <AdminPageTitle title="New Rate" />
+
+          <SelectField
+            setValue={val => this.setState({ service: val })}
+            labelName="Service"
+            selectOptions={serviceOptions}
+          />
+
+           <SelectField
+            setValue={val => this.setState({ origin: val })}
+            labelName="Origin Zone"
+            selectOptions={zoneOptions}
+          />
+
+           <SelectField
+            setValue={val => this.setState({ destination: val })}
+            labelName="Destination Zone"
+            selectOptions={zoneOptions}
+          />
+
+         
+          <InputField
+            setValue={val => this.setState({ price: val })}
+            inputType="number"
+            labelName="Rate Increase"
+          />
+         
 
           <AdminInfoPanel contentId="" createdOn="" lastUpdated="">
             <div className="admin-info__item admin-info__item--active">
@@ -119,4 +153,18 @@ class Service extends PureComponent {
   }
 }
 
-export default Service;
+
+const mapStateToProps = ({ services, zones }) => {
+    return {
+      services,
+      zones
+    };
+  };
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      increment: () => dispatch({ type: `INCREMENT` })
+    };
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Rate);

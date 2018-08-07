@@ -30,6 +30,20 @@ const reducer = (state, action) => {
     })
   }
 
+  if ( action.type === `SET_SERVICES` ) {
+    return Object.assign({}, state, {
+      services: action.services
+    })
+  }
+
+  if ( action.type === `SET_RATES` ) {
+    return Object.assign({}, state, {
+      rates: action.rates
+    })
+  }
+
+
+
   return state;
 };
 
@@ -61,7 +75,9 @@ const initialState = {
 
   highlightedZones: [],
   zones: [],
+  services: [],
   merchants: [],
+  rates: [],
   twinjetAPI: null
 };
 
