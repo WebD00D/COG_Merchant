@@ -180,3 +180,8 @@ textarea, select {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+
+
+.ant-list-item-content-single {
+  justify-content: space-between !important;
+}

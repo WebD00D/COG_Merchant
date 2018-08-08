@@ -19,7 +19,18 @@ import TextAreaField from "../../components/TextareaField";
 import SelectField from "../../components/SelectField";
 import HighlightedFormField from "../../components/HighlightedFormField";
 
-import { TimePicker, Checkbox, Divider, message } from "antd";
+import ServiceRateHours from "../../components/ServiceRateHours";
+import DeliverySurchargeItem from "../../components/DeliverySurchargeItem";
+
+import {
+  TimePicker,
+  Checkbox,
+  Divider,
+  message,
+  List,
+  Button,
+  Input
+} from "antd";
 
 import { createId, getQueryVariable } from "../../utils/app-utils";
 
@@ -39,7 +50,36 @@ class Rate extends PureComponent {
 
       id: "",
       saved: "",
-      updated: ""
+      updated: "",
+
+      sunday: true,
+      monday: true,
+      tuesday: true,
+      wednesday: true,
+      thursday: true,
+      friday: true,
+      saturday: true,
+
+      sun__open: "",
+      sun__close: "",
+
+      mon__open: "",
+      mon__close: "",
+
+      tues__open: "",
+      tues__close: "",
+
+      wed__open: "",
+      wed__close: "",
+
+      thurs__open: "",
+      thurs__close: "",
+
+      fri__open: "",
+      fri__close: "",
+
+      sat__open: "",
+      sat__close: ""
     };
   }
 
@@ -61,7 +101,6 @@ class Rate extends PureComponent {
 
     var updates = {};
     updates["/rates/" + rateId] = newRate;
- 
 
     fire
       .database()
@@ -79,18 +118,18 @@ class Rate extends PureComponent {
   }
 
   render() {
-
     let serviceOptions = [];
 
-    this.props.services && Object.keys(this.props.services).map( (key) => {
-        serviceOptions.push(this.props.services[key].name)
-    } )
+    this.props.services &&
+      Object.keys(this.props.services).map(key => {
+        serviceOptions.push(this.props.services[key].name);
+      });
 
     let zoneOptions = [];
-    this.props.zones && Object.keys(this.props.zones).map( (key) => {
-        zoneOptions.push(this.props.zones[key].name)
-    })
-   
+    this.props.zones &&
+      Object.keys(this.props.zones).map(key => {
+        zoneOptions.push(this.props.zones[key].name);
+      });
 
     return (
       <div>
@@ -110,25 +149,85 @@ class Rate extends PureComponent {
             selectOptions={serviceOptions}
           />
 
-           <SelectField
+          <SelectField
             setValue={val => this.setState({ origin: val })}
             labelName="Origin Zone"
             selectOptions={zoneOptions}
           />
 
-           <SelectField
+          <SelectField
             setValue={val => this.setState({ destination: val })}
             labelName="Destination Zone"
             selectOptions={zoneOptions}
           />
 
-         
           <InputField
             setValue={val => this.setState({ price: val })}
             inputType="number"
             labelName="Rate Increase"
           />
-         
+
+          <HighlightedFormField
+            highlightText={`If no time selected, service rate will default to regular open / close hours.`}
+          >
+            <div className="input-wrap m-b-30">
+              <label>Service Rate Availability</label>
+            </div>
+            <List className="m-b-30" bordered>
+              <ServiceRateHours day={"Sunday"} selected={this.state.s} />
+              <ServiceRateHours day={"Monday"} />
+              <ServiceRateHours day={"Tuesday"} />
+              <ServiceRateHours day={"Wednesday"} />
+              <ServiceRateHours day={"Thursday"} />
+              <ServiceRateHours day={"Friday"} />
+              <ServiceRateHours day={"Saturday"} />
+            </List>
+          </HighlightedFormField>
+
+          <HighlightedFormField
+            highlightText={`Additional delivery surcharge zone-to-zone based on time/date/order size`}
+          >
+            <div className="fx fx-s-b ">
+              <div className="input-wrap m-b-30 fx">
+                <label>Delivery Surcharges (By Time)</label>
+              </div>
+              <Button>Add Surcharge</Button>
+            </div>
+
+            <List className="m-b-30" bordered>
+              <DeliverySurchargeItem addOnPlaceHolder={"$"} />
+            </List>
+          </HighlightedFormField>
+
+
+          <HighlightedFormField
+            highlightText={`Mandatory gratuity (%) that can be set for each zone to zone linkage`}
+          >
+            <div className="fx fx-s-b ">
+              <div className="input-wrap m-b-30 fx">
+                <label>Mandatory Gratuity (By Time)</label>
+              </div>
+              <Button>Add Gratuity </Button>
+            </div>
+
+            <List className="m-b-30" bordered>
+              <DeliverySurchargeItem addOnPlaceHolder={"%"} />
+            </List>
+          </HighlightedFormField>
+
+          <HighlightedFormField
+            highlightText={`Mandatory gratuity (%) that can be set for each zone to zone linkage`}
+          >
+            <div className="fx fx-s-b ">
+              <div className="input-wrap m-b-30 fx">
+                <label>Temporary Auto-gratuity</label>
+              </div>
+            </div>
+
+            <List className="m-b-30" bordered>
+              <DeliverySurchargeItem addOnPlaceHolder={"%"} />
+            </List>
+          </HighlightedFormField>
 
           <AdminInfoPanel contentId="" createdOn="" lastUpdated="">
             <div className="admin-info__item admin-info__item--active">
@@ -153,18 +252,17 @@ class Rate extends PureComponent {
   }
 }
 
-
 const mapStateToProps = ({ services, zones }) => {
-    return {
-      services,
-      zones
-    };
+  return {
+    services,
+    zones
   };
-  
-  const mapDispatchToProps = dispatch => {
-    return {
-      increment: () => dispatch({ type: `INCREMENT` })
-    };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    increment: () => dispatch({ type: `INCREMENT` })
   };
-  
-  export default connect(mapStateToProps, mapDispatchToProps)(Rate);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Rate);

@@ -11,7 +11,16 @@ import "../../layouts/fcss.css";
 import "../../layouts/components.css";
 
 import "antd/dist/antd.css";
-import { Menu, Dropdown, Button, Icon, message, Alert, Divider } from "antd";
+import {
+  Menu,
+  Dropdown,
+  Button,
+  Icon,
+  message,
+  Alert,
+  Divider,
+  Checkbox
+} from "antd";
 
 import AdminTheme from "../../themes/admin-theme";
 import AdminActionBar from "../../components/AdminActionBar";
@@ -72,6 +81,24 @@ class RateList extends PureComponent {
             route="/admin/rate"
           />
           <AdminPageTitle title="Rates" />
+
+          <HighlightedFormField
+          customTopMargin={"0px"}
+            highlightText={`Rate settings here will be considered the default for any rates. Settings can be changed rate by rate specifically by changing the individual rate setting. `}
+          >
+            <div className="fx fx-s-b ">
+              <div className="input-wrap m-b-10 fx">
+                <label>Base Level Rate Settings</label>
+              </div>
+            </div>
+
+            <div className="m-b-30">
+              <div><Checkbox checked>Base level setting</Checkbox></div>
+              <div><Checkbox checked>A sample setting for all rates</Checkbox></div>
+              <div><Checkbox checked>Another sample setting for all rates</Checkbox></div>
+
+            </div>
+          </HighlightedFormField>
 
           {Rates}
 
