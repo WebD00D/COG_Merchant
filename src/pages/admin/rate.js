@@ -174,7 +174,7 @@ class Rate extends PureComponent {
               <label>Service Rate Availability</label>
             </div>
             <List className="m-b-30" bordered>
-              <ServiceRateHours day={"Sunday"} selected={this.state.s} />
+              <ServiceRateHours day={"Sunday"} selected={this.state.service} />
               <ServiceRateHours day={"Monday"} />
               <ServiceRateHours day={"Tuesday"} />
               <ServiceRateHours day={"Wednesday"} />
