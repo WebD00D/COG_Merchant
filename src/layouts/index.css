@@ -545,3 +545,8 @@ pre tt:after {
   margin-left: auto;
   margin-right: auto;
 }
+
+
+.ant-checkbox-wrapper {
+  margin-left: 0px !important;
+}
