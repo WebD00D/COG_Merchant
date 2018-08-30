@@ -13,11 +13,13 @@ const FilterMenu = styled.div`
   padding: 30px;
   background-color: #fff;
   position: fixed;
-  top: 100px;
+  top: 0px;
+  padding-top: 130px;
   bottom: 0px;
   z-index: 1;
   display: flex;
   flex-direction: column;
+  height: 100vh;
 `;
 
 const MenuTitle = styled.div`
@@ -32,6 +34,7 @@ const MainContent = styled.div`
   padding: 30px;
   padding-left: 60px;
   padding-right: 60px;
+  padding-top: 130px; 
 `;
 
 const CategoryList = styled.div`
@@ -45,66 +48,64 @@ const CategoryCheck = styled(Checkbox)`
   margin-bottom: 8px !important;
 `;
 
-
 const PartnerCard = styled.div`
-    position: relative;
-    background-color: #fff;
-    padding: 22px;
-    width: 100%;
-    min-height: 150px;
-    display: flex;
-    align-items: center;
-`
+  position: relative;
+  background-color: #fff;
+  padding: 22px;
+  width: 100%;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+`;
 
 const PartnerCategory = styled.div`
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    background-color: #f5f5f5;
-    color: #ABBDD1;
-    padding-left: 30px;
-    padding-right: 30px;
-    height: 32px;
-    line-height: 32px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-`
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  background-color: #f5f5f5;
+  color: #abbdd1;
+  padding-left: 30px;
+  padding-right: 30px;
+  height: 32px;
+  line-height: 32px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+`;
 
 const PartnerImage = styled.div`
-    height: 120px;
-    width: 120px;
-    background-color: #f5f5f5;
-    border-radius: 50%;
-    margin-right: 30px;
-`
+  height: 120px;
+  width: 120px;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  margin-right: 30px;
+`;
 
 const PartnerMeta = styled.div`
-    display: flex;
-    flex-direction: column;
-`
+  display: flex;
+  flex-direction: column;
+`;
 
 const PartnerTitle = styled.div`
-    font-size: 24px;
-`
+  font-size: 24px;
+`;
 
 const PartnerAddress = styled.div`
-    font-size: 13px;
-    color: #ABBDD1;
-    letter-spacing: .5px;
-`
+  font-size: 13px;
+  color: #abbdd1;
+  letter-spacing: 0.5px;
+`;
 
 const OrderNowButton = styled(Button)`
-position: absolute;
-right: 0px;
-    
-`
+  position: absolute;
+  right: 30px;
+`;
 
 class Partners extends Component {
   render() {
     return (
       <div>
         <ClientNavbar />
-
         <FilterMenu>
           <MenuTitle>SEARCH BY NAME</MenuTitle>
           <Search
@@ -121,7 +122,7 @@ class Partners extends Component {
               Burritos
             </CategoryCheck>
             <CategoryCheck onChange={e => console.log(e.target.checked)}>
-              Chocolate
+              Coffee
             </CategoryCheck>
             <CategoryCheck onChange={e => console.log(e.target.checked)}>
               Barbeque
@@ -139,17 +140,40 @@ class Partners extends Component {
             </div>
 
             <PartnerCard>
-                <PartnerCategory>Burgers</PartnerCategory>
-                <PartnerImage />
-                <PartnerMeta>
-                    <PartnerTitle>Carytown Burgers & Fries</PartnerTitle>
-                    <PartnerAddress>10am - 11pm | 123 Cary Street Richmond, VA 23233</PartnerAddress>
-                  
-                </PartnerMeta>
-                
-
+              <PartnerCategory>Coffee</PartnerCategory>
+              <PartnerImage />
+              <PartnerMeta>
+                <PartnerTitle>Menotti's Coffee Co.</PartnerTitle>
+                <PartnerAddress>
+                  10am - 11pm | 123 Cary Street Richmond, VA 23233
+                </PartnerAddress>
+              </PartnerMeta>
+              <OrderNowButton type="primary">Order Now</OrderNowButton>
             </PartnerCard>
 
+            <PartnerCard>
+              <PartnerCategory>Burgers</PartnerCategory>
+              <PartnerImage />
+              <PartnerMeta>
+                <PartnerTitle>Carytown Burgers & Fries</PartnerTitle>
+                <PartnerAddress>
+                  10am - 11pm | 123 Cary Street Richmond, VA 23233
+                </PartnerAddress>
+              </PartnerMeta>
+              <OrderNowButton type="primary">Order Now</OrderNowButton>
+            </PartnerCard>
+
+            <PartnerCard>
+              <PartnerCategory>Burgers</PartnerCategory>
+              <PartnerImage />
+              <PartnerMeta>
+                <PartnerTitle>Carytown Burgers & Fries</PartnerTitle>
+                <PartnerAddress>
+                  10am - 11pm | 123 Cary Street Richmond, VA 23233
+                </PartnerAddress>
+              </PartnerMeta>
+              <OrderNowButton type="primary">Order Now</OrderNowButton>
+            </PartnerCard>
           </div>
         </MainContent>
       </div>
