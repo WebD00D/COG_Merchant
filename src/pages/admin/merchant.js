@@ -1,86 +1,187 @@
-import React, { PureComponent } from "react";
-import Link from "gatsby-link";
-import fire from "../../fire";
-import { Route, Redirect } from "react-router-dom";
-import cx from "classnames";
-import _ from "lodash";
-import { connect } from "react-redux";
-import "whatwg-fetch";
+import React, { PureComponent } from 'react';
+import Link from 'gatsby-link';
+import fire from '../../fire';
+import { Route, Redirect } from 'react-router-dom';
+import cx from 'classnames';
+import _ from 'lodash';
+import { connect } from 'react-redux';
+import 'whatwg-fetch';
 
-import "../../layouts/fcss.css";
-import "../../layouts/components.css";
+import '../../layouts/fcss.css';
+import '../../layouts/components.css';
 
-import AdminTheme from "../../themes/admin-theme";
-import AdminActionBar from "../../components/AdminActionBar";
-import AdminPageTitle from "../../components/AdminPageTitle";
-import AdminInfoPanel from "../../components/AdminInfoPanel";
+import AdminTheme from '../../themes/admin-theme';
+import AdminActionBar from '../../components/AdminActionBar';
+import AdminPageTitle from '../../components/AdminPageTitle';
+import AdminInfoPanel from '../../components/AdminInfoPanel';
 
-import InputField from "../../components/InputField";
-import TextAreaField from "../../components/TextareaField";
-import SelectField from "../../components/SelectField";
-import HighlightedFormField from "../../components/HighlightedFormField";
+import InputField from '../../components/InputField';
+import TextAreaField from '../../components/TextareaField';
+import SelectField from '../../components/SelectField';
+import HighlightedFormField from '../../components/HighlightedFormField';
 
-import { TimePicker, Checkbox, Divider } from "antd";
-import moment from "moment";
+import { TimePicker, Checkbox, Divider } from 'antd';
+import moment from 'moment';
+
+import { CREATE_NEW_MERCHANT } from '../../api/api_admin.js';
 
 class Merchant extends PureComponent {
   constructor(props) {
     super(props);
 
+    this.handleSaveMerchant = this.handleSaveMerchant.bind(this);
+
     this.state = {
-      merchantSection: "info" // info, login, api, billing
+      merchantId: '',
+      createdOn: '',
+      lastUpdated: '',
+
+      company: '',
+      phone: '',
+      email: '',
+      street: '',
+      city: '',
+      state: '',
+      zip: '',
+      primaryContactName: '',
+      primaryContactPhone: '',
+      description: '',
+      pickupDelivery: 'Delivery & Pickup',
+      status: 'Pending Approval'
     };
   }
 
-  onChange() {}
+  componentDidMount() {}
+
+  handleSaveMerchant() {
+    const {
+      company,
+      phone,
+      email,
+      street,
+      city,
+      state,
+      zip,
+      primaryContactName,
+      primaryContactPhone,
+      description,
+      pickupDelivery,
+      status
+    } = this.state;
+
+    // Create Merchant Object param
+    const merchant = {
+      company,
+      phone,
+      email,
+      street,
+      city,
+      state,
+      zip,
+      primaryContactName,
+      primaryContactPhone,
+      description,
+      pickupDelivery,
+      status
+    };
+
+    const newMerchant = CREATE_NEW_MERCHANT(merchant);
+    this.setState({
+      merchantId: newMerchant.id,
+      createdOn: newMerchant.createdOn,
+      lastUpdated: newMerchant.lastUpdated
+    });
+
+
+  }
 
   render() {
     return (
       <div>
         <AdminTheme>
           <AdminActionBar
-            handleAction={() => alert("SAVE THE MERCHANT!")}
+            handleAction={() => this.handleSaveMerchant()}
             action="Save"
             model="Merchant"
             backRoute="/admin/merchant-list"
           />
           <AdminPageTitle title="New Merchant" />
-          <InputField labelName="Company name" />
-          <InputField labelName="Phone" />
-          <InputField labelName="Email" />
+          <InputField
+            setValue={val => this.setState({ company: val })}
+            labelName="Company name"
+          />
+          <InputField
+            setValue={val => this.setState({ phone: val })}
+            labelName="Phone"
+          />
+          <InputField
+            setValue={val => this.setState({ email: val })}
+            labelName="Email"
+          />
 
           <HighlightedFormField highlightText="When an order is placed, this is the address the courier will pick up from">
             <div className="input-field-wrap">
-              <InputField isFieldGroup={true} pos="left" labelName="Street" />
-              <InputField isFieldGroup={true} pos="right" labelName="City" />
+              <InputField
+                setValue={val => this.setState({ street: val })}
+                isFieldGroup={true}
+                pos="left"
+                labelName="Street"
+              />
+              <InputField
+                setValue={val => this.setState({ city: val })}
+                isFieldGroup={true}
+                pos="right"
+                labelName="City"
+              />
             </div>
             <div className="input-field-wrap">
-              <InputField isFieldGroup={true} pos="left" labelName="State" />
-              <InputField isFieldGroup={true} pos="right" labelName="Zip" />
+              <InputField
+                setValue={val => this.setState({ state: val })}
+                isFieldGroup={true}
+                pos="left"
+                labelName="State"
+              />
+              <InputField
+                setValue={val => this.setState({ zip: val })}
+                isFieldGroup={true}
+                pos="right"
+                labelName="Zip"
+              />
             </div>
           </HighlightedFormField>
 
-          <InputField labelName="Primary Contact Name" />
-          <InputField labelName="Primary Contact Phone " />
+          <InputField
+            setValue={val => this.setState({ primaryContactName: val })}
+            labelName="Primary Contact Name"
+          />
+          <InputField
+            setValue={val => this.setState({ primaryContactPhone: val })}
+            labelName="Primary Contact Phone "
+          />
 
-          <TextAreaField labelName="Description" />
+          <TextAreaField
+            setValue={val => this.setState({ description: val })}
+            labelName="Description"
+          />
           <SelectField
+            setValue={val => this.setState({ pickupDelivery: val })}
             labelName="Pickup / Delivery"
             selectOptions={[
-              "Delivery & Pickup",
-              "Delivery Only",
-              "Pickup Only",
-              "Phone Orders Only"
+              'Delivery & Pickup',
+              'Delivery Only',
+              'Pickup Only',
+              'Phone Orders Only'
             ]}
           />
           <SelectField
+            setValue={val => this.setState({ status: val })}
             labelName="Status"
             selectOptions={[
-              "Pending Approval",
-              "Active",
-              "Suspended",
-              "Blocked",
-              "Expired"
+              'Pending Approval',
+              'Active',
+              'Suspended',
+              'Blocked',
+              'Expired'
             ]}
           />
 
@@ -88,9 +189,15 @@ class Merchant extends PureComponent {
             <div className="admin-info__item admin-info__item--active">
               Merchant Info
             </div>
-            <div className="admin-info__item ">Login Info</div>
-            <div className="admin-info__item ">API Settings</div>
-            <div className="admin-info__item ">Billing Info</div>
+            <div className="admin-info__item ">
+              ID: - {this.state.merchantId}
+            </div>
+            <div className="admin-info__item ">
+              Created On: - {this.state.createdOn}
+            </div>
+            <div className="admin-info__item ">
+              Last Updated: - {this.state.lastUpdated}
+            </div>
           </AdminInfoPanel>
         </AdminTheme>
       </div>
