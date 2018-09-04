@@ -30,6 +30,7 @@ class Merchant extends PureComponent {
     super(props);
 
     this.handleSaveMerchant = this.handleSaveMerchant.bind(this);
+    this.handleEditMerchant = this.handleEditMerchant.bind(this);
 
     this.state = {
       merchantId: '',
@@ -47,11 +48,19 @@ class Merchant extends PureComponent {
       primaryContactPhone: '',
       description: '',
       pickupDelivery: 'Delivery & Pickup',
-      status: 'Pending Approval'
+      status: 'Pending Approval',
+
+      editMode: false
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+
+    // Are we editing a pre-existing merchant?
+
+  }
+
+  handleEditMerchant() {}
 
   handleSaveMerchant() {
     const {
@@ -89,23 +98,36 @@ class Merchant extends PureComponent {
     this.setState({
       merchantId: newMerchant.id,
       createdOn: newMerchant.createdOn,
-      lastUpdated: newMerchant.lastUpdated
+      lastUpdated: newMerchant.lastUpdated,
+      editMode: true
     });
-
-
   }
 
   render() {
     return (
       <div>
         <AdminTheme>
-          <AdminActionBar
-            handleAction={() => this.handleSaveMerchant()}
-            action="Save"
-            model="Merchant"
-            backRoute="/admin/merchant-list"
-          />
-          <AdminPageTitle title="New Merchant" />
+          {this.state.editMode ? (
+            <AdminActionBar
+              handleAction={() => this.handleEditMerchant()}
+              action="Edit"
+              model="Merchant"
+              backRoute="/admin/merchant-list"
+            />
+          ) : (
+            <AdminActionBar
+              handleAction={() => this.handleSaveMerchant()}
+              action="Save"
+              model="Merchant"
+              backRoute="/admin/merchant-list"
+            />
+          )}
+
+          {this.state.editMode ? (
+            <AdminPageTitle title="Edit Merchant" />
+          ) : (
+            <AdminPageTitle title="New Merchant" />
+          )}
           <InputField
             setValue={val => this.setState({ company: val })}
             labelName="Company name"
