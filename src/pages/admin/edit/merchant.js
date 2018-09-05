@@ -1,29 +1,29 @@
 import React, { PureComponent } from 'react';
 import Link from 'gatsby-link';
-import fire from '../../fire';
+import fire from '../../../fire';
 import { Route, Redirect } from 'react-router-dom';
 import cx from 'classnames';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import 'whatwg-fetch';
 
-import '../../layouts/fcss.css';
-import '../../layouts/components.css';
+import '../../../layouts/fcss.css';
+import '../../../layouts/components.css';
 
-import AdminTheme from '../../themes/admin-theme';
-import AdminActionBar from '../../components/AdminActionBar';
-import AdminPageTitle from '../../components/AdminPageTitle';
-import AdminInfoPanel from '../../components/AdminInfoPanel';
+import AdminTheme from '../../../themes/admin-theme';
+import AdminActionBar from '../../../components/AdminActionBar';
+import AdminPageTitle from '../../../components/AdminPageTitle';
+import AdminInfoPanel from '../../../components/AdminInfoPanel';
 
-import InputField from '../../components/InputField';
-import TextAreaField from '../../components/TextareaField';
-import SelectField from '../../components/SelectField';
-import HighlightedFormField from '../../components/HighlightedFormField';
+import InputField from '../../../components/InputField';
+import TextAreaField from '../../../components/TextareaField';
+import SelectField from '../../../components/SelectField';
+import HighlightedFormField from '../../../components/HighlightedFormField';
 
 import { TimePicker, Checkbox, Divider } from 'antd';
 import moment from 'moment';
 
-import { CREATE_NEW_MERCHANT, GET_ALL_ZONES } from '../../api/api_admin.js';
+import { CREATE_NEW_MERCHANT, GET_ALL_ZONES } from '../../../api/api_admin.js';
 
 class Merchant extends PureComponent {
   constructor(props) {
@@ -58,6 +58,8 @@ class Merchant extends PureComponent {
 
   componentDidMount() {
     // GET ZONES
+
+    console.log("this.props.single", this.props.singleMerchant)
 
     GET_ALL_ZONES.then(zones => {
       console.log('retrieved zones', zones);
@@ -251,4 +253,18 @@ class Merchant extends PureComponent {
   }
 }
 
-export default Merchant;
+const mapStateToProps = ({ singleMerchant }) => {
+  return { singleMerchant };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setSingleMerchant: merchant =>
+      dispatch({
+        type: `SET_SINGLE_MERCHANT`,
+        merchant
+      })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Merchant);

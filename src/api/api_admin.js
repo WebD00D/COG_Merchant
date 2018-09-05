@@ -27,3 +27,25 @@ export const CREATE_NEW_MERCHANT = fields => {
 
   return newMerchant;
 };
+
+export const GET_ALL_MERCHANTS = new Promise((resolve, reject) => {
+  console.log("GET ALL MERCHANTS")
+  fire
+    .database()
+    .ref('merchants')
+    .once('value')
+    .then(function(snapshot) {
+      console.log('[GET_ALL_MERCHANTS]',snapshot.val())
+      return resolve(snapshot.val());
+    });
+});
+
+export const GET_ALL_ZONES = new Promise((resolve, reject) => {
+  fire
+    .database()
+    .ref('zones/')
+    .once('value')
+    .then(snapshot => {
+      resolve(snapshot.val());
+    });
+});

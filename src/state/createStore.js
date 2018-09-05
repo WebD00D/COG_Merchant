@@ -1,9 +1,8 @@
-import { createStore as reduxCreateStore } from "redux";
-import fire from "../fire";
-import _ from "lodash";
+import { createStore as reduxCreateStore } from 'redux';
+import fire from '../fire';
+import _ from 'lodash';
 
 const reducer = (state, action) => {
-
   if (action.type === `CREATE_COURIER`) {
     return Object.assign({}, state, {
       user: action.user,
@@ -11,36 +10,49 @@ const reducer = (state, action) => {
     });
   }
 
-  if ( action.type === `ADD_ZONE` ) {
-    
+  if (action.type === `ADD_ZONE`) {
     return Object.assign({}, state, {
       zones: [...state.zones, action.zone]
-    })
-  }
-  
-  if ( action.type === `SET_ZONES` ) {
-    return Object.assign({}, state, {
-      zones: action.zones 
-    })
+    });
   }
 
-  if ( action.type === `SET_HIGHLIGHTED_ZONES` ) {
+  if (action.type === `SET_ZONES`) {
+    return Object.assign({}, state, {
+      zones: action.zones
+    });
+  }
+
+  if (action.type === `SET_HIGHLIGHTED_ZONES`) {
     return Object.assign({}, state, {
       highlightedZones: action.zones
-    })
+    });
   }
 
-  if ( action.type === `SET_SERVICES` ) {
+  if (action.type === `SET_SERVICES`) {
     return Object.assign({}, state, {
       services: action.services
-    })
+    });
   }
 
-  if ( action.type === `SET_RATES` ) {
+  if (action.type === `SET_RATES`) {
     return Object.assign({}, state, {
       rates: action.rates
-    })
+    });
   }
+
+  if (action.type === `SET_MERCHANTS`) {
+    return Object.assign({}, state, {
+      merchants: action.merchants
+    });
+  }
+
+  if (action.type === `SET_SINGLE_MERCHANT`) {
+    return Object.assign({}, state, {
+      singleMerchant: action.merchant
+    });
+  }
+
+  
 
   return state;
 };
@@ -55,26 +67,27 @@ const initialState = {
     authenticated: true,
     id: 'ok8Z3Emd8PMvRodsGPiaubIpHTK2',
     type: `COURIER`,
-    email: "rva.christian91@gmail.com",
-    name: "Christian Bryant"
+    email: 'rva.christian91@gmail.com',
+    name: 'Christian Bryant'
   },
 
   courier: {
     id: 'ok8Z3Emd8PMvRodsGPiaubIpHTK2',
-    company: "Quickness RVA",
-    contactName: "Christian Bryant",
-    contactEmail: "rva.christian91@gmail.com",
-    contactPhone: "804.555.5555",
-    city: "Richmond",
-    state: "VA",
-    zip: "23233",
-    authenticationEmail: "rva.christian91@gmail.com"
+    company: 'Quickness RVA',
+    contactName: 'Christian Bryant',
+    contactEmail: 'rva.christian91@gmail.com',
+    contactPhone: '804.555.5555',
+    city: 'Richmond',
+    state: 'VA',
+    zip: '23233',
+    authenticationEmail: 'rva.christian91@gmail.com'
   },
 
   highlightedZones: [],
   zones: [],
   services: [],
   merchants: [],
+  singleMerchant: [],
   rates: [],
   twinjetAPI: null
 };
