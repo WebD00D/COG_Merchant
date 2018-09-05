@@ -26,12 +26,12 @@ class MerchantListItem extends PureComponent {
       case 'Pending Approval':
         statusPercent = 50;
         showInfo = false;
-        statusLabel = null;
+        statusLabel = 'exception';
         break;
       case 'Active':
         statusPercent = 100;
-        showInfo = true;
-        statusLabel = null;
+        showInfo = false;
+        statusLabel = 'active';
         break;
       case 'Suspended':
         statusPercent = 100;

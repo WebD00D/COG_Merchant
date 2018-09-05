@@ -32,13 +32,24 @@ class MerchantList extends PureComponent {
   componentDidMount() {
     const { setMerchants } = this.props;
 
-    console.log("component monted in merchant list?")
+    console.log('component monted in merchant list?');
 
     // get merchants..
-    GET_ALL_MERCHANTS.then(merchants => {
-      console.log("merchants", merchants)
-      setMerchants(merchants);
-    });
+    // GET_ALL_MERCHANTS.then(merchants => {
+    //   console.log("merchants", merchants)
+    //   setMerchants(merchants);
+    // });
+
+    fire
+      .database()
+      .ref('merchants')
+      .once('value')
+      .then(function(snapshot) {
+      
+        console.log('[GET_ALL_MERCHANTS]', snapshot.val())
+        setMerchants(snapshot.val())
+        // return resolve(snapshot.val());
+      });
   }
 
   render() {

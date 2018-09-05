@@ -28,6 +28,25 @@ export const CREATE_NEW_MERCHANT = fields => {
   return newMerchant;
 };
 
+export const EDIT_MERCHANT = (id, fields) => {
+
+  const merchantId = id;
+  const currentDate = GET_CURRENT_DATE();
+  
+  let updates = {};
+
+  updates[`/merchants/${merchantId}/fields`] = fields;
+  updates[`/merchants/${merchantId}/lastUpdated`] = currentDate;
+
+  fire
+  .database()
+  .ref()
+  .update(updates);
+
+  return currentDate;
+
+}
+
 export const GET_ALL_MERCHANTS = new Promise((resolve, reject) => {
   console.log("GET ALL MERCHANTS")
   fire

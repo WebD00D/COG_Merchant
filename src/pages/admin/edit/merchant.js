@@ -20,10 +20,10 @@ import TextAreaField from '../../../components/TextareaField';
 import SelectField from '../../../components/SelectField';
 import HighlightedFormField from '../../../components/HighlightedFormField';
 
-import { TimePicker, Checkbox, Divider } from 'antd';
+import { TimePicker, Checkbox, Divider, message } from 'antd';
 import moment from 'moment';
 
-import { CREATE_NEW_MERCHANT, GET_ALL_ZONES } from '../../../api/api_admin.js';
+import { CREATE_NEW_MERCHANT, GET_ALL_ZONES, EDIT_MERCHANT } from '../../../api/api_admin.js';
 
 class Merchant extends PureComponent {
   constructor(props) {
@@ -47,8 +47,8 @@ class Merchant extends PureComponent {
       primaryContactName: '',
       primaryContactPhone: '',
       description: '',
-      pickupDelivery: 'Delivery & Pickup',
-      status: 'Pending Approval',
+      pickupDelivery: '',
+      status: '',
       zone: '',
       editMode: false,
 
@@ -57,7 +57,6 @@ class Merchant extends PureComponent {
   }
 
   componentDidMount() {
-    // GET ZONES
 
     console.log("this.props.single", this.props.singleMerchant)
 
@@ -71,7 +70,51 @@ class Merchant extends PureComponent {
     // Are we editing a pre-existing merchant?
   }
 
-  handleEditMerchant() {}
+  handleEditMerchant() {
+
+    const {
+      company,
+      phone,
+      email,
+      street,
+      city,
+      state,
+      zip,
+      primaryContactName,
+      primaryContactPhone,
+      description,
+      pickupDelivery,
+      status,
+      zone
+    } = this.state;
+
+    const single = this.props.singleMerchant.fields
+
+    const merchant = {
+      company: company || single.company,
+      phone: phone || single.phone,
+      email: email || single.email,
+      street: street || single.street,
+      city: city || single.city,
+      state: state || single.state,
+      zip: zip || single.zip,
+      primaryContactName: primaryContactName || single.primaryContactName,
+      primaryContactPhone: primaryContactPhone || single.primaryContactPhone,
+      description: description || single.description,
+      pickupDelivery: pickupDelivery || single.pickupDelivery,
+      status: status || single.status,
+      zone: zone || single.zone
+    };
+
+    const updatedMerchant = EDIT_MERCHANT(this.props.singleMerchant.id, merchant);
+    this.setState({
+      lastUpdated: updatedMerchant,
+      editMode: false
+    });
+
+    message.success("Saved merchant!")
+
+  }
 
   handleSaveMerchant() {
     const {
@@ -128,38 +171,32 @@ class Merchant extends PureComponent {
     return (
       <div>
         <AdminTheme>
-          {this.state.editMode ? (
+        
             <AdminActionBar
               handleAction={() => this.handleEditMerchant()}
-              action="Edit"
-              model="Merchant"
-              backRoute="/admin/merchant-list"
-            />
-          ) : (
-            <AdminActionBar
-              handleAction={() => this.handleSaveMerchant()}
               action="Save"
               model="Merchant"
               backRoute="/admin/merchant-list"
             />
-          )}
+          
+          <AdminPageTitle title="Edit Merchant" />
 
-          {this.state.editMode ? (
-            <AdminPageTitle title="Edit Merchant" />
-          ) : (
-            <AdminPageTitle title="New Merchant" />
-          )}
           <InputField
             setValue={val => this.setState({ company: val })}
             labelName="Company name"
+            initialValue={this.props.singleMerchant.fields.company}
           />
           <InputField
             setValue={val => this.setState({ phone: val })}
             labelName="Phone"
+            initialValue={this.props.singleMerchant.fields.phone}
+
           />
           <InputField
             setValue={val => this.setState({ email: val })}
             labelName="Email"
+            initialValue={this.props.singleMerchant.fields.email}
+
           />
 
           <HighlightedFormField highlightText="When an order is placed, this is the address the courier will pick up from">
@@ -169,12 +206,16 @@ class Merchant extends PureComponent {
                 isFieldGroup={true}
                 pos="left"
                 labelName="Street"
+                initialValue={this.props.singleMerchant.fields.street}
+
               />
               <InputField
                 setValue={val => this.setState({ city: val })}
                 isFieldGroup={true}
                 pos="right"
                 labelName="City"
+                initialValue={this.props.singleMerchant.fields.city}
+
               />
             </div>
             <div className="input-field-wrap">
@@ -183,12 +224,16 @@ class Merchant extends PureComponent {
                 isFieldGroup={true}
                 pos="left"
                 labelName="State"
+                initialValue={this.props.singleMerchant.fields.state}
+
               />
               <InputField
                 setValue={val => this.setState({ zip: val })}
                 isFieldGroup={true}
                 pos="right"
                 labelName="Zip"
+                initialValue={this.props.singleMerchant.fields.zip}
+
               />
             </div>
           </HighlightedFormField>
@@ -196,24 +241,33 @@ class Merchant extends PureComponent {
           <InputField
             setValue={val => this.setState({ primaryContactName: val })}
             labelName="Primary Contact Name"
+            initialValue={this.props.singleMerchant.fields.primaryContactName}
+
           />
           <InputField
             setValue={val => this.setState({ primaryContactPhone: val })}
             labelName="Primary Contact Phone "
+            initialValue={this.props.singleMerchant.fields.primaryContactPhone}
+
           />
 
           <TextAreaField
             setValue={val => this.setState({ description: val })}
             labelName="Description"
+            initialValue={this.props.singleMerchant.fields.description}
+
           />
           <SelectField
             setValue={val => this.setState({ zone: val })}
             labelName="Zone"
             selectOptions={zoneChoices}
+            initialValue={this.props.singleMerchant.fields.zone}
+
           />
           <SelectField
             setValue={val => this.setState({ pickupDelivery: val })}
             labelName="Pickup / Delivery"
+            initialValue={this.props.singleMerchant.fields.pickupDelivery}
             selectOptions={[
               'Delivery & Pickup',
               'Delivery Only',
@@ -224,6 +278,7 @@ class Merchant extends PureComponent {
           <SelectField
             setValue={val => this.setState({ status: val })}
             labelName="Status"
+            initialValue={this.props.singleMerchant.fields.status}
             selectOptions={[
               'Pending Approval',
               'Active',
@@ -238,13 +293,13 @@ class Merchant extends PureComponent {
               Merchant Info
             </div>
             <div className="admin-info__item ">
-              ID: - {this.state.merchantId}
+              ID: - {this.props.singleMerchant.id}
             </div>
             <div className="admin-info__item ">
-              Created On: - {this.state.createdOn}
+              Created On: - {this.props.singleMerchant.createdOn}
             </div>
             <div className="admin-info__item ">
-              Last Updated: - {this.state.lastUpdated}
+              Last Updated: - {this.props.singleMerchant.lastUpdated}
             </div>
           </AdminInfoPanel>
         </AdminTheme>
