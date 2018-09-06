@@ -25,9 +25,10 @@ import moment from 'moment';
 
 import {
   CREATE_NEW_MERCHANT,
-  GET_ALL_ZONES,
   EDIT_MERCHANT
-} from '../../../api/api_admin.js';
+} from '../../../api/api_merchant';
+
+import { GET_ALL_ZONES } from "../../../api/api_zones";
 
 class Merchant extends PureComponent {
   constructor(props) {

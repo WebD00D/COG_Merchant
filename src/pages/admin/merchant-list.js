@@ -20,7 +20,8 @@ import AdminInfoPanel from '../../components/AdminInfoPanel';
 import MerchantListActions from '../../components/MerchantListActions';
 import MerchantListItem from '../../components/MerchantListItem';
 
-import { GET_ALL_MERCHANTS, GET_ALL_ZONES } from '../../api/api_admin';
+import { GET_ALL_MERCHANTS,  } from '../../api/api_merchant';
+import { GET_ALL_ZONES } from "../../api/api_zones.js"
 
 class MerchantList extends PureComponent {
   constructor(props) {
@@ -29,6 +30,7 @@ class MerchantList extends PureComponent {
     this.state = {
       filteredMerchants: [],
       zoneFilters: [],
+      statusFilters: []
     };
   }
 
@@ -42,27 +44,41 @@ class MerchantList extends PureComponent {
   }
 
   handleSorting(type, name) {
+    const { zoneFilters, filteredMerchants } = this.state;
 
-    const { zoneFilters } = this.state;
+    if (type === 'zone') {
+      _.includes(zoneFilters, name)
+        ? zoneFilters.splice(zoneFilters.indexOf(name), 1)
+        : zoneFilters.push(name);
 
-    if ( type === "zone" ) {
+      let newMerchantList = [];
 
-      _.includes(zoneFilters, name) ? zoneFilters.splice(zoneFilters.indexOf(name), 1) : zoneFilters.push(name);
+      zoneFilters.length > 0
+        ? Object.keys(this.props.merchants).map(merchant => {
+            if (
+              _.includes(
+                zoneFilters,
+                this.props.merchants[merchant].fields.zone
+              )
+            ) {
+              newMerchantList.push(this.props.merchants[merchant]);
+            }
+          })
+        : (newMerchantList = this.props.merchants);
 
       this.setState({
         zoneFilters,
-      
-      })
+        filteredMerchants: newMerchantList
+      });
     }
 
-
+ 
   }
 
   render() {
     const merchants =
       this.state.filteredMerchants &&
       Object.keys(this.state.filteredMerchants).map(merchant => {
-
         return (
           <MerchantListItem
             key={merchant}

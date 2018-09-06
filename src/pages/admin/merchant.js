@@ -20,10 +20,9 @@ import TextAreaField from '../../components/TextareaField';
 import SelectField from '../../components/SelectField';
 import HighlightedFormField from '../../components/HighlightedFormField';
 
-import { TimePicker, Checkbox, Divider } from 'antd';
-import moment from 'moment';
 
-import { CREATE_NEW_MERCHANT, GET_ALL_ZONES } from '../../api/api_admin.js';
+import { CREATE_NEW_MERCHANT } from '../../api/api_merchant';
+import { GET_ALL_ZONES } from '../../api/api_zones';
 
 class Merchant extends PureComponent {
   constructor(props) {
@@ -57,16 +56,8 @@ class Merchant extends PureComponent {
   }
 
   componentDidMount() {
-    // GET ZONES
 
-    GET_ALL_ZONES.then(zones => {
-      console.log('retrieved zones', zones);
-      this.setState({
-        zones
-      });
-    });
-
-    // Are we editing a pre-existing merchant?
+    GET_ALL_ZONES().then(zones => this.setState({ zones }));
   }
 
   handleEditMerchant() {}
