@@ -20,46 +20,53 @@ import AdminInfoPanel from '../../components/AdminInfoPanel';
 import MerchantListActions from '../../components/MerchantListActions';
 import MerchantListItem from '../../components/MerchantListItem';
 
-import { GET_ALL_MERCHANTS } from '../../api/api_admin';
+import { GET_ALL_MERCHANTS, GET_ALL_ZONES } from '../../api/api_admin';
 
 class MerchantList extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {};
+    this.handleSorting = this.handleSorting.bind(this);
+    this.state = {
+      filteredMerchants: [],
+      zoneFilters: [],
+    };
   }
 
   componentDidMount() {
-    const { setMerchants } = this.props;
+    const { setMerchants, setZones } = this.props;
+    GET_ALL_MERCHANTS().then(merchants => {
+      setMerchants(merchants);
+      this.setState({ filteredMerchants: merchants });
+    });
+    GET_ALL_ZONES().then(zones => setZones(zones));
+  }
 
-    console.log('component monted in merchant list?');
+  handleSorting(type, name) {
 
-    // get merchants..
-    // GET_ALL_MERCHANTS.then(merchants => {
-    //   console.log("merchants", merchants)
-    //   setMerchants(merchants);
-    // });
+    const { zoneFilters } = this.state;
 
-    fire
-      .database()
-      .ref('merchants')
-      .once('value')
-      .then(function(snapshot) {
+    if ( type === "zone" ) {
+
+      _.includes(zoneFilters, name) ? zoneFilters.splice(zoneFilters.indexOf(name), 1) : zoneFilters.push(name);
+
+      this.setState({
+        zoneFilters,
       
-        console.log('[GET_ALL_MERCHANTS]', snapshot.val())
-        setMerchants(snapshot.val())
-        // return resolve(snapshot.val());
-      });
+      })
+    }
+
+
   }
 
   render() {
     const merchants =
-      this.props.merchants &&
-      Object.keys(this.props.merchants).map(merchant => {
+      this.state.filteredMerchants &&
+      Object.keys(this.state.filteredMerchants).map(merchant => {
+
         return (
           <MerchantListItem
             key={merchant}
-            merchant={this.props.merchants[merchant]}
+            merchant={this.state.filteredMerchants[merchant]}
           />
         );
       });
@@ -67,16 +74,6 @@ class MerchantList extends PureComponent {
     return (
       <div>
         <AdminTheme>
-          <div style={{ paddingTop: '30px' }}>
-            <Alert
-              message="Merchant is not setup"
-              description="Merchant 'ZZQ' has been Pending for 13 days"
-              type="warning"
-              showIcon
-              closeText="Close"
-            />
-          </div>
-
           <AdminActionBar
             searchBar={true}
             inputPlaceholder="Search merchants..."
@@ -86,11 +83,14 @@ class MerchantList extends PureComponent {
           />
           <AdminPageTitle title="Merchants" />
 
-          <MerchantListActions />
+          <MerchantListActions
+            sort={(type, value) => this.handleSorting(type, value)}
+            zones={this.props.zones}
+          />
 
           <div className="model-list">{merchants}</div>
 
-          <AdminInfoPanel contentId="" createdOn="" lastUpdated="">
+          {/* <AdminInfoPanel contentId="" createdOn="" lastUpdated="">
             <div className="admin-info__item admin-info__item--active">
               <Icon
                 style={{ position: 'absolute', right: '60px' }}
@@ -116,15 +116,15 @@ class MerchantList extends PureComponent {
                 <Icon style={{ color: '#FFF' }} type="customer-service" />
               </Button>
             </div>
-          </AdminInfoPanel>
+          </AdminInfoPanel> */}
         </AdminTheme>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ merchants }) => {
-  return { merchants };
+const mapStateToProps = ({ merchants, zones }) => {
+  return { merchants, zones };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -133,6 +133,11 @@ const mapDispatchToProps = dispatch => {
       dispatch({
         type: `SET_MERCHANTS`,
         merchants
+      }),
+    setZones: zones =>
+      dispatch({
+        type: `SET_ZONES`,
+        zones
       })
   };
 };

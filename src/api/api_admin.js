@@ -29,42 +29,38 @@ export const CREATE_NEW_MERCHANT = fields => {
 };
 
 export const EDIT_MERCHANT = (id, fields) => {
-
   const merchantId = id;
   const currentDate = GET_CURRENT_DATE();
-  
+
   let updates = {};
 
   updates[`/merchants/${merchantId}/fields`] = fields;
   updates[`/merchants/${merchantId}/lastUpdated`] = currentDate;
 
   fire
-  .database()
-  .ref()
-  .update(updates);
+    .database()
+    .ref()
+    .update(updates);
 
   return currentDate;
+};
 
-}
-
-export const GET_ALL_MERCHANTS = new Promise((resolve, reject) => {
-  console.log("GET ALL MERCHANTS")
-  fire
+export const GET_ALL_MERCHANTS = () => {
+  return fire
     .database()
     .ref('merchants')
     .once('value')
     .then(function(snapshot) {
-      console.log('[GET_ALL_MERCHANTS]',snapshot.val())
-      return resolve(snapshot.val());
+      return snapshot.val();
     });
-});
+};
 
-export const GET_ALL_ZONES = new Promise((resolve, reject) => {
-  fire
+export const GET_ALL_ZONES = () => {
+  return fire
     .database()
-    .ref('zones/')
+    .ref('zones')
     .once('value')
-    .then(snapshot => {
-      resolve(snapshot.val());
+    .then(function(snapshot) {
+      return snapshot.val();
     });
-});
+};

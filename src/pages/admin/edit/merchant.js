@@ -23,7 +23,11 @@ import HighlightedFormField from '../../../components/HighlightedFormField';
 import { TimePicker, Checkbox, Divider, message } from 'antd';
 import moment from 'moment';
 
-import { CREATE_NEW_MERCHANT, GET_ALL_ZONES, EDIT_MERCHANT } from '../../../api/api_admin.js';
+import {
+  CREATE_NEW_MERCHANT,
+  GET_ALL_ZONES,
+  EDIT_MERCHANT
+} from '../../../api/api_admin.js';
 
 class Merchant extends PureComponent {
   constructor(props) {
@@ -57,21 +61,10 @@ class Merchant extends PureComponent {
   }
 
   componentDidMount() {
-
-    console.log("this.props.single", this.props.singleMerchant)
-
-    GET_ALL_ZONES.then(zones => {
-      console.log('retrieved zones', zones);
-      this.setState({
-        zones
-      });
-    });
-
-    // Are we editing a pre-existing merchant?
+    GET_ALL_ZONES().then(zones => this.setState({ zones }));
   }
 
   handleEditMerchant() {
-
     const {
       company,
       phone,
@@ -88,7 +81,7 @@ class Merchant extends PureComponent {
       zone
     } = this.state;
 
-    const single = this.props.singleMerchant.fields
+    const single = this.props.singleMerchant.fields;
 
     const merchant = {
       company: company || single.company,
@@ -106,14 +99,16 @@ class Merchant extends PureComponent {
       zone: zone || single.zone
     };
 
-    const updatedMerchant = EDIT_MERCHANT(this.props.singleMerchant.id, merchant);
+    const updatedMerchant = EDIT_MERCHANT(
+      this.props.singleMerchant.id,
+      merchant
+    );
     this.setState({
       lastUpdated: updatedMerchant,
       editMode: false
     });
 
-    message.success("Saved merchant!")
-
+    message.success('Saved merchant!');
   }
 
   handleSaveMerchant() {
@@ -131,7 +126,6 @@ class Merchant extends PureComponent {
       pickupDelivery,
       status,
       zone
-
     } = this.state;
 
     // Create Merchant Object param
@@ -171,14 +165,13 @@ class Merchant extends PureComponent {
     return (
       <div>
         <AdminTheme>
-        
-            <AdminActionBar
-              handleAction={() => this.handleEditMerchant()}
-              action="Save"
-              model="Merchant"
-              backRoute="/admin/merchant-list"
-            />
-          
+          <AdminActionBar
+            handleAction={() => this.handleEditMerchant()}
+            action="Save"
+            model="Merchant"
+            backRoute="/admin/merchant-list"
+          />
+
           <AdminPageTitle title="Edit Merchant" />
 
           <InputField
@@ -190,13 +183,11 @@ class Merchant extends PureComponent {
             setValue={val => this.setState({ phone: val })}
             labelName="Phone"
             initialValue={this.props.singleMerchant.fields.phone}
-
           />
           <InputField
             setValue={val => this.setState({ email: val })}
             labelName="Email"
             initialValue={this.props.singleMerchant.fields.email}
-
           />
 
           <HighlightedFormField highlightText="When an order is placed, this is the address the courier will pick up from">
@@ -207,7 +198,6 @@ class Merchant extends PureComponent {
                 pos="left"
                 labelName="Street"
                 initialValue={this.props.singleMerchant.fields.street}
-
               />
               <InputField
                 setValue={val => this.setState({ city: val })}
@@ -215,7 +205,6 @@ class Merchant extends PureComponent {
                 pos="right"
                 labelName="City"
                 initialValue={this.props.singleMerchant.fields.city}
-
               />
             </div>
             <div className="input-field-wrap">
@@ -225,7 +214,6 @@ class Merchant extends PureComponent {
                 pos="left"
                 labelName="State"
                 initialValue={this.props.singleMerchant.fields.state}
-
               />
               <InputField
                 setValue={val => this.setState({ zip: val })}
@@ -233,7 +221,6 @@ class Merchant extends PureComponent {
                 pos="right"
                 labelName="Zip"
                 initialValue={this.props.singleMerchant.fields.zip}
-
               />
             </div>
           </HighlightedFormField>
@@ -242,27 +229,23 @@ class Merchant extends PureComponent {
             setValue={val => this.setState({ primaryContactName: val })}
             labelName="Primary Contact Name"
             initialValue={this.props.singleMerchant.fields.primaryContactName}
-
           />
           <InputField
             setValue={val => this.setState({ primaryContactPhone: val })}
             labelName="Primary Contact Phone "
             initialValue={this.props.singleMerchant.fields.primaryContactPhone}
-
           />
 
           <TextAreaField
             setValue={val => this.setState({ description: val })}
             labelName="Description"
             initialValue={this.props.singleMerchant.fields.description}
-
           />
           <SelectField
             setValue={val => this.setState({ zone: val })}
             labelName="Zone"
             selectOptions={zoneChoices}
             initialValue={this.props.singleMerchant.fields.zone}
-
           />
           <SelectField
             setValue={val => this.setState({ pickupDelivery: val })}

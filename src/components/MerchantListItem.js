@@ -16,7 +16,7 @@ class MerchantListItem extends PureComponent {
 
   render() {
     const { createdOn, id, lastUpdated } = this.props.merchant;
-    const { company, phone, status } = this.props.merchant.fields;
+    const { company, phone, status, zone } = this.props.merchant.fields;
 
     let statusPercent;
     let showInfo;
@@ -50,6 +50,10 @@ class MerchantListItem extends PureComponent {
         <div className="model-list__item model-list__item-lg">
           <label>Merchant</label>
           <div>{company}</div>
+        </div>
+        <div className="model-list__item">
+          <label>Zone</label>
+          <div>{zone}</div>
         </div>
         <div className="model-list__item">
           <label>Phone</label>
