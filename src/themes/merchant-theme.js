@@ -30,6 +30,7 @@ class MerchantTheme extends PureComponent {
                     <img style={{height: "40px"}} src={require("../layouts/images/logo@2x.png")}/>
                     <div className="theme-type">MERCHANT</div>
                 </div>
+                
                 <Link to="/merchant/dashboard">
                     <i className="fa fa-cutlery" aria-hidden="true"></i>Orders
                 </Link>

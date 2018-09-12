@@ -63,13 +63,26 @@ const initialState = {
   // user: {},
   // courier: {},
 
+
+  // COURIER TEST USER
+
+  // user: {
+  //   authenticated: true,
+  //   id: 'ok8Z3Emd8PMvRodsGPiaubIpHTK2',
+  //   type: `COURIER`,
+  //   email: 'rva.christian91@gmail.com',
+  //   name: 'Christian Bryant'
+  // },
+
+  // MERCHANT TEST USER
   user: {
     authenticated: true,
-    id: 'ok8Z3Emd8PMvRodsGPiaubIpHTK2',
-    type: `COURIER`,
-    email: 'rva.christian91@gmail.com',
-    name: 'Christian Bryant'
+    id: 'sLhjQktD6UZ0NEExHppBEUaVBVo2',
+    type: `MERCHANT`,
+    email: 'merchant@cog.bike',
+    name: `Menotti's Cofee`
   },
+
 
   courier: {
     id: 'ok8Z3Emd8PMvRodsGPiaubIpHTK2',

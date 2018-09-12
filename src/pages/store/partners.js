@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import fire from '../../fire';
 
 import ClientNavbar from '../../components/ClientNavbar';
 
@@ -34,7 +35,7 @@ const MainContent = styled.div`
   padding: 30px;
   padding-left: 60px;
   padding-right: 60px;
-  padding-top: 130px; 
+  padding-top: 130px;
 `;
 
 const CategoryList = styled.div`
@@ -102,7 +103,52 @@ const OrderNowButton = styled(Button)`
 `;
 
 class Partners extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      partners: []
+    };
+
+    this.getPartners = this.getPartners.bind(this);
+  }
+
+  componentDidMount() {
+    this.getPartners();
+  }
+
+  getPartners() {
+    fire
+      .database()
+      .ref('/merchants')
+      .orderByChild('fields/status')
+      .equalTo('Active')
+      .once('value', snapshot => {
+        console.log('snapshot', snapshot.val());
+        this.setState({
+          partners: snapshot.val()
+        });
+      });
+  }
+
   render() {
+    const Partners =
+      this.state.partners &&
+      this.state.partners.map(partner => {
+        return (
+          <PartnerCard>
+            <PartnerCategory>Coffee</PartnerCategory>
+            <PartnerImage />
+            <PartnerMeta>
+              <PartnerTitle>Menotti's Coffee Co.</PartnerTitle>
+              <PartnerAddress>
+                10am - 11pm | 123 Cary Street Richmond, VA 23233
+              </PartnerAddress>
+            </PartnerMeta>
+            <OrderNowButton type="primary">Order Now</OrderNowButton>
+          </PartnerCard>
+        );
+      });
+
     return (
       <div>
         <ClientNavbar />
@@ -138,18 +184,6 @@ class Partners extends Component {
             <div className="m-b-40">
               <h1>Partners</h1>
             </div>
-
-            <PartnerCard>
-              <PartnerCategory>Coffee</PartnerCategory>
-              <PartnerImage />
-              <PartnerMeta>
-                <PartnerTitle>Menotti's Coffee Co.</PartnerTitle>
-                <PartnerAddress>
-                  10am - 11pm | 123 Cary Street Richmond, VA 23233
-                </PartnerAddress>
-              </PartnerMeta>
-              <OrderNowButton type="primary">Order Now</OrderNowButton>
-            </PartnerCard>
 
             <PartnerCard>
               <PartnerCategory>Burgers</PartnerCategory>

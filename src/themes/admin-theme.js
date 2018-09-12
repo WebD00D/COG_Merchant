@@ -71,6 +71,9 @@ class AdminTheme extends PureComponent {
             <Link to="/admin/merchants">
               <i className="fa fa-gear" aria-hidden="true" />Settings
             </Link>
+            <Link to="/admin/food-categories">
+            <i className="fa fa-coffee" aria-hidden="true" /> Food Categories
+            </Link>
 
             <Dropdown overlay={menu} placement="topCenter">
               <div className="admin-theme__user" style={{ height: "80px" }}>
