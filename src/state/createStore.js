@@ -63,7 +63,6 @@ const initialState = {
   // user: {},
   // courier: {},
 
-
   // COURIER TEST USER
 
   // user: {
@@ -80,7 +79,8 @@ const initialState = {
     id: 'sLhjQktD6UZ0NEExHppBEUaVBVo2',
     type: `MERCHANT`,
     email: 'merchant@cog.bike',
-    name: `Menotti's Cofee`
+    name: `Menotti's Cofee`,
+    merchantShopId: `MERCHANT-1536235965800-6qr9v12k1me`
   },
 
 

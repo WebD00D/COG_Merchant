@@ -1,24 +1,26 @@
-import React, { PureComponent } from "react";
-import Link from "gatsby-link";
-import fire from "../../fire";
-import { Route, Redirect } from "react-router-dom";
-import cx from "classnames";
-import _ from "lodash";
-import { connect } from "react-redux";
-import "whatwg-fetch";
+import React, { PureComponent } from 'react';
+import Link from 'gatsby-link';
+import fire from '../../fire';
+import { Route, Redirect } from 'react-router-dom';
+import cx from 'classnames';
+import _ from 'lodash';
+import { connect } from 'react-redux';
+import 'whatwg-fetch';
 
-import "../../layouts/fcss.css";
-import "../../layouts/components.css";
+import '../../layouts/fcss.css';
+import '../../layouts/components.css';
 
-import MerchantTheme from "../../themes/merchant-theme";
-import AdminActionBar from "../../components/AdminActionBar";
-import AdminPageTitle from "../../components/AdminPageTitle";
-import AdminInfoPanel from "../../components/AdminInfoPanel";
+import MerchantTheme from '../../themes/merchant-theme';
+import AdminActionBar from '../../components/AdminActionBar';
+import AdminPageTitle from '../../components/AdminPageTitle';
+import AdminInfoPanel from '../../components/AdminInfoPanel';
 
-import InputField from "../../components/InputField";
-import TextAreaField from "../../components/TextareaField";
-import SelectField from "../../components/SelectField";
-import HighlightedFormField from "../../components/HighlightedFormField";
+import InputField from '../../components/InputField';
+import TextAreaField from '../../components/TextareaField';
+import SelectField from '../../components/SelectField';
+import HighlightedFormField from '../../components/HighlightedFormField';
+
+import { GET_ALL_MENU_ITEMS } from '../../api/api_merchant';
 
 import {
   Table,
@@ -28,40 +30,54 @@ import {
   Checkbox,
   TimePicker,
   Divider
-} from "antd";
+} from 'antd';
 
-import moment from "moment";
+const { Column } = Table;
+
+import moment from 'moment';
 
 class MenuItems extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      searchText: ""
+      menuItemId: '',
+      createdOn: '',
+      lastUpdated: '',
+      items: []
     };
   }
 
-  onChange(e) {
-    console.log(`checked = ${e.target.checked}`);
+  componentDidMount() {
+    // Query the database for all menu items....
+
+    const menuItems = GET_ALL_MENU_ITEMS(this.props.user.merchantShopId);
+
+    menuItems &&
+      menuItems.then(items => {
+        this.setState({
+          items
+        });
+      });
   }
 
   render() {
     const columns = [
       {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
+        title: 'Name',
+        dataIndex: 'name',
+        key: 'name'
       },
 
       {
-        title: "Price",
-        dataIndex: "price",
-        key: "price"
+        title: 'Price',
+        dataIndex: 'price',
+        key: 'price'
       },
- 
+
       {
-        title: "Action",
-        key: "action",
+        title: 'Action',
+        key: 'action',
         render: (text, record) => (
           <span>
             <a href="javascript:;">Edit</a>
@@ -72,23 +88,18 @@ class MenuItems extends PureComponent {
       }
     ];
 
-    const data = [
-      {
-        key: "1",
-        name: "House Blend Coffee",
-        price: "2.50"
-      },
-      {
-        key: "2",
-        name: "Cafe Americano",
-        price: "3.25"
-      },
-      {
-        key: "3",
-        name: "Cafe Latte",
-        price: "4.00"
-      }
-    ];
+    const data = [];
+
+    this.state.items &&
+      Object.keys(this.state.items).map(item => {
+        const menuItemObj = {
+          key: item,
+          name: this.state.items[item].itemName,
+          price: this.state.items[item].price
+        };
+
+        data.push(menuItemObj);
+      });
 
     return (
       <div>
@@ -96,19 +107,33 @@ class MenuItems extends PureComponent {
           <AdminActionBar
             action="Add"
             model="Menu Item"
-            backRoute="/merchant/menus"
+            backRoute="/merchant/menu-items"
+            route="/merchant/menu-item"
           />
           <AdminPageTitle title="Menu Items" />
 
-          <HighlightedFormField highlightText="Any and all menu items can be found and added here." >
-            <Table size="small" columns={columns} dataSource={data} />
+          <HighlightedFormField highlightText="Any and all menu items can be found and added here.">
+            <Table size="small" dataSource={data}>
+              <Column title="Name" dataIndex="name" key="name" />
+              <Column title="Price" dataIndex="price" key="price" />
+              <Column
+                title="Actions"
+                key="actions"
+                render={(text, record) => (
+                  <span>
+                    <Link onClick={() => console.log(record)} to={`/merchant/menu-item?item=${record.key}`}>Edit</Link>
+                    <Divider type="vertical" />
+                    <a href="javascript:;">Delete</a>
+                  </span>
+                )}
+              />
+            </Table>
           </HighlightedFormField>
 
           <AdminInfoPanel contentId="" createdOn="" lastUpdated="">
             <div className="admin-info__item admin-info__item--active">
               Menu Info
             </div>
-            <div className="admin-info__item ">Menu Settings</div>
           </AdminInfoPanel>
         </MerchantTheme>
       </div>
@@ -116,4 +141,23 @@ class MenuItems extends PureComponent {
   }
 }
 
-export default MenuItems;
+const mapStateToProps = ({ user }) => {
+  return { user };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setZones: zones =>
+      dispatch({
+        type: `SET_ZONES`,
+        zones
+      }),
+    setHighlightedZones: zones =>
+      dispatch({
+        type: `SET_HIGHLIGHTED_ZONES`,
+        zones
+      })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MenuItems);
