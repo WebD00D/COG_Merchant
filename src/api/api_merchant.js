@@ -107,3 +107,16 @@ export const GET_MENU_ITEM_BY_ID = (merchantId, menuItemId) => {
       return snapshot.val();
     })
 };
+
+export const DELETE_MENU_ITEM = (merchantId, menuItemId) => {
+  let updates = {};
+
+  updates[`/merchants/${merchantId}/menu-items/${menuItemId}`] = null;
+  return fire
+    .database()
+    .ref()
+    .update(updates);
+
+    
+}
+

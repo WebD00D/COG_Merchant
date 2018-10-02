@@ -15,12 +15,9 @@ import AdminActionBar from '../../components/AdminActionBar';
 import AdminPageTitle from '../../components/AdminPageTitle';
 import AdminInfoPanel from '../../components/AdminInfoPanel';
 
-import InputField from '../../components/InputField';
-import TextAreaField from '../../components/TextareaField';
-import SelectField from '../../components/SelectField';
 import HighlightedFormField from '../../components/HighlightedFormField';
 
-import { GET_ALL_MENU_ITEMS } from '../../api/api_merchant';
+import { GET_ALL_MENU_ITEMS, DELETE_MENU_ITEM } from '../../api/api_merchant';
 
 import {
   Table,
@@ -40,6 +37,9 @@ class MenuItems extends PureComponent {
   constructor(props) {
     super(props);
 
+    this.getMenuItems = this.getMenuItems.bind(this);
+    this.deleteMenuItem = this.deleteMenuItem.bind(this);
+
     this.state = {
       menuItemId: '',
       createdOn: '',
@@ -50,7 +50,10 @@ class MenuItems extends PureComponent {
 
   componentDidMount() {
     // Query the database for all menu items....
+    this.getMenuItems();
+  }
 
+  getMenuItems() {
     const menuItems = GET_ALL_MENU_ITEMS(this.props.user.merchantShopId);
 
     menuItems &&
@@ -61,33 +64,15 @@ class MenuItems extends PureComponent {
       });
   }
 
+  deleteMenuItem(menuItemId) {
+
+    DELETE_MENU_ITEM(this.props.user.merchantShopId, menuItemId).then( () => {
+      
+      this.getMenuItems();
+    })
+  }
+
   render() {
-    const columns = [
-      {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name'
-      },
-
-      {
-        title: 'Price',
-        dataIndex: 'price',
-        key: 'price'
-      },
-
-      {
-        title: 'Action',
-        key: 'action',
-        render: (text, record) => (
-          <span>
-            <a href="javascript:;">Edit</a>
-            <Divider type="vertical" />
-            <a href="javascript:;">Delete</a>
-          </span>
-        )
-      }
-    ];
-
     const data = [];
 
     this.state.items &&
@@ -121,9 +106,22 @@ class MenuItems extends PureComponent {
                 key="actions"
                 render={(text, record) => (
                   <span>
-                    <Link onClick={() => console.log(record)} to={`/merchant/menu-item?item=${record.key}`}>Edit</Link>
+                    <Link
+                      onClick={() => console.log(record)}
+                      to={`/merchant/menu-item?item=${record.key}`}
+                    >
+                      Edit
+                    </Link>
                     <Divider type="vertical" />
-                    <a href="javascript:;">Delete</a>
+                    <a
+                      href="javascript:;"
+                      onClick={e => {
+                        e.preventDefault();
+                        this.deleteMenuItem(record.key)
+                      }}
+                    >
+                      Delete
+                    </a>
                   </span>
                 )}
               />
