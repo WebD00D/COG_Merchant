@@ -85,10 +85,10 @@ export const CREATE_MENU_ITEM = (merchantId, menuItemId, fields) => {
 };
 
 /**
- * 
- * @param {*} merchantId 
+ *
+ * @param {*} merchantId
  */
-export const GET_ALL_MENU_ITEMS = (merchantId) => {
+export const GET_ALL_MENU_ITEMS = merchantId => {
   return fire
     .database()
     .ref(`/merchants/${merchantId}/menu-items`)
@@ -96,4 +96,14 @@ export const GET_ALL_MENU_ITEMS = (merchantId) => {
     .then(function(snapshot) {
       return snapshot.val();
     });
+};
+
+export const GET_MENU_ITEM_BY_ID = (merchantId, menuItemId) => {
+  return fire
+    .database()
+    .ref(`/merchants/${merchantId}/menu-items/${menuItemId}`)
+    .once('value')
+    .then(function(snapshot) {
+      return snapshot.val();
+    })
 };

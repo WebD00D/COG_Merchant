@@ -19,8 +19,8 @@ class InputField extends PureComponent {
     };
   }
 
-  render() {
 
+  render() {
     let inputWrapperClass = cx({
       'w-100p': true,
       'field-group--left': this.props.isFieldGroup && this.props.pos === "left",
@@ -28,14 +28,14 @@ class InputField extends PureComponent {
     });
 
     return (
-      <div className={inputWrapperClass} style={{width: this.props.wrapperWidth}}>
+      <div key={this.props.labelName} className={inputWrapperClass} style={{width: this.props.wrapperWidth}}>
         <div className="input-wrap">
           <label>{this.props.labelName}</label>
           <input
-            defaultValue={this.props.initialValue || ""}
             placeholder={this.props.placeholder || ""}
             onChange={e => this.props.setValue(e.target.value)}
             type={this.props.inputType}
+            value={this.props.initialValue || ''}
           />
         </div>
       </div>

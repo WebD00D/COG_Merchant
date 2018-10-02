@@ -20,7 +20,8 @@ import TextAreaField from '../../components/TextareaField';
 import SelectField from '../../components/SelectField';
 import HighlightedFormField from '../../components/HighlightedFormField';
 
-import { CREATE_MENU_ITEM } from '../../api/api_merchant';
+import { CREATE_MENU_ITEM, GET_MENU_ITEM_BY_ID } from '../../api/api_merchant';
+import { GET_URL_VARIABLES } from '../../api/api_utils';
 
 import {
   Table,
@@ -29,7 +30,8 @@ import {
   Icon,
   Checkbox,
   TimePicker,
-  Divider
+  Divider,
+  message
 } from 'antd';
 
 import moment from 'moment';
@@ -53,11 +55,30 @@ class MenuItem extends PureComponent {
     };
   }
 
-  componentDidMount() {
-      // Need to check for URL param with menu item id. 
-      // If we've got one, then query the db, and set state to edit mode.. 
+  componentWillMount() {
+    // Need to check for URL param with menu item id.
+    // If we've got one, then query the db, and set state to edit mode..
 
-      
+    const menuItemId = GET_URL_VARIABLES()['item'];
+
+    if (menuItemId) {
+      // query database for details..
+      GET_MENU_ITEM_BY_ID(this.props.user.merchantShopId, menuItemId).then(
+        response => {
+          // set item details to state..
+          // set edit mode to true..
+          this.setState({
+            menuItemId: menuItemId,
+            createdOn: response.createdOn,
+            lastUpdated: response.lastUpdated,
+            itemName: response.itemName,
+            description: response.description,
+            price: response.price,
+            editMode: true
+          });
+        }
+      );
+    }
   }
 
   saveMenuItem() {
@@ -83,12 +104,13 @@ class MenuItem extends PureComponent {
       createdOn: activeMenuItem.fields.createdOn,
       lastUpdated: activeMenuItem.fields.lastUpdated,
       editMode: true
-    })
+    });
 
+    message.success("Menu item saved!")
   }
 
   render() {
-    console.log(this.props.user);
+   
     return (
       <div>
         <MerchantTheme>
@@ -105,18 +127,22 @@ class MenuItem extends PureComponent {
           <InputField
             setValue={val => this.setState({ itemName: val })}
             labelName="Item name"
+            initialValue={this.state.itemName}
           />
 
           <InputField
             setValue={val => this.setState({ description: val })}
             labelName="Short description"
+            initialValue={this.state.description}
           />
 
           <InputField
             setValue={val => this.setState({ price: val })}
             labelName="Price"
             inputType="number"
+            initialValue={this.state.price}
           />
+
 
           <AdminInfoPanel contentId="" createdOn="" lastUpdated="">
             <div className="admin-info__item admin-info__item--active">
