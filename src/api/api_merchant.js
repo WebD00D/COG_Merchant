@@ -3,9 +3,6 @@ import { createId } from '../utils/app-utils';
 import { GET_CURRENT_DATE } from '../api/api_utils';
 import { UPDATE_RECORD } from '../api/db';
 
-/**
- *
- */
 export const GET_ALL_MERCHANTS = () => {
   return fire
     .database()
@@ -16,10 +13,6 @@ export const GET_ALL_MERCHANTS = () => {
     });
 };
 
-/**
- *
- * @param {*} fields
- */
 export const CREATE_NEW_MERCHANT = fields => {
   const merchantId = createId('MERCHANT');
   const currentDate = GET_CURRENT_DATE();
@@ -41,11 +34,6 @@ export const CREATE_NEW_MERCHANT = fields => {
   return newMerchant;
 };
 
-/**
- *
- * @param {*} id
- * @param {*} fields
- */
 export const EDIT_MERCHANT = (id, fields) => {
   const merchantId = id;
   const currentDate = GET_CURRENT_DATE();
@@ -63,12 +51,8 @@ export const EDIT_MERCHANT = (id, fields) => {
   return currentDate;
 };
 
-/**
- *
- * @param {*} merchantId
- * @param {*} menuItemId
- * @param {*} fields
- */
+export const CREATE_MENU_CATEGORY = (merchantId, categoryId, fields) => {};
+
 export const CREATE_MENU_ITEM = (merchantId, menuItemId, fields) => {
   const itemId = menuItemId ? menuItemId : createId('MENU-ITEM');
 
@@ -84,10 +68,6 @@ export const CREATE_MENU_ITEM = (merchantId, menuItemId, fields) => {
   return newMenuItem;
 };
 
-/**
- *
- * @param {*} merchantId
- */
 export const GET_ALL_MENU_ITEMS = merchantId => {
   return fire
     .database()
@@ -105,7 +85,7 @@ export const GET_MENU_ITEM_BY_ID = (merchantId, menuItemId) => {
     .once('value')
     .then(function(snapshot) {
       return snapshot.val();
-    })
+    });
 };
 
 export const DELETE_MENU_ITEM = (merchantId, menuItemId) => {
@@ -116,7 +96,50 @@ export const DELETE_MENU_ITEM = (merchantId, menuItemId) => {
     .database()
     .ref()
     .update(updates);
+};
 
-    
-}
+export const CREATE_ADD_ON_ITEM = (merchantId, addOnItemId, fields) => {
+  const addOnId = addOnItemId ? addOnItemId : createId('ADD-ON');
+  let updates = {};
+  updates[`/merchants/${merchantId}/add-ons/${addOnId}`] = fields;
+  const db = UPDATE_RECORD(updates);
 
+  const newMenuItem = {
+    id: addOnId,
+    fields
+  };
+
+  return newMenuItem;
+};
+
+export const GET_ADD_ON_BY_ID = (merchantId, menuItemId) => {
+  return fire
+    .database()
+    .ref(`/merchants/${merchantId}/add-ons/${menuItemId}`)
+    .once('value')
+    .then(function(snapshot) {
+      return snapshot.val();
+    });
+};
+
+
+export const GET_ALL_ADD_ONS = merchantId => {
+  return fire
+    .database()
+    .ref(`/merchants/${merchantId}/add-ons`)
+    .once('value')
+    .then(function(snapshot) {
+      return snapshot.val();
+    });
+};
+
+
+export const DELETE_ADD_ON = (merchantId, menuItemId) => {
+  let updates = {};
+
+  updates[`/merchants/${merchantId}/add-ons/${menuItemId}`] = null;
+  return fire
+    .database()
+    .ref()
+    .update(updates);
+};
