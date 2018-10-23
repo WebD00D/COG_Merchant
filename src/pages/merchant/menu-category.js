@@ -56,6 +56,9 @@ class MenuCategory extends PureComponent {
   componentWillMount() {
     // Need to check for URL param with menu item id.
     // If we've got one, then query the db, and set state to edit mode..
+  }
+
+  componentDidMount() {
     const menuItemId = GET_URL_VARIABLES()['item'];
 
     if (menuItemId) {
@@ -80,9 +83,6 @@ class MenuCategory extends PureComponent {
         }
       );
     }
-  }
-
-  componentDidMount() {
     // Query the database for all menu items....
     this.getMenuItems();
   }

@@ -57,7 +57,7 @@ class AddOn extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // Need to check for URL param with menu item id.
     // If we've got one, then query the db, and set state to edit mode..
 

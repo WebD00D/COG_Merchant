@@ -66,7 +66,7 @@ class MenuItem extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // Need to check for URL param with menu item id.
     // If we've got one, then query the db, and set state to edit mode..
     const menuItemId = GET_URL_VARIABLES()['item'];
@@ -94,9 +94,7 @@ class MenuItem extends PureComponent {
         }
       );
     }
-  }
 
-  componentDidMount() {
     const addOnItems = GET_ALL_ADD_ONS(this.props.user.merchantShopId);
 
     addOnItems &&
@@ -105,7 +103,10 @@ class MenuItem extends PureComponent {
           addOnItems
         });
       });
+
   }
+
+  
 
 
   createAddOn(record) {
