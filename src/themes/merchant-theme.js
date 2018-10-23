@@ -34,8 +34,8 @@ class MerchantTheme extends PureComponent {
                 <Link to="/merchant/dashboard">
                     <i className="fa fa-cutlery" aria-hidden="true"></i>Orders
                 </Link>
-                <Link to="/merchant/menus">
-                    <i className="fa fa-folder-open" aria-hidden="true"></i>Menus
+                <Link to="/merchant/menu">
+                    <i className="fa fa-folder-open" aria-hidden="true"></i>Menu
                 </Link>
                 <Link to="/admin/merchants">
                     <i className="fa fa-users" aria-hidden="true"></i>Users

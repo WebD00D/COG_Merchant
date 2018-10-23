@@ -20,11 +20,16 @@ import TextAreaField from '../../components/TextareaField';
 import SelectField from '../../components/SelectField';
 import HighlightedFormField from '../../components/HighlightedFormField';
 
-import { Checkbox, Row, Col, Table, Divider } from 'antd';
+import { Checkbox, Row, Col, Table, Divider, message } from 'antd';
 
 const { Column } = Table;
 
-import { GET_ALL_MENU_ITEMS } from '../../api/api_merchant';
+import {
+  GET_ALL_MENU_ITEMS,
+  CREATE_MENU_CATEGORY,
+  GET_MENU_CATEGORY_BY_ID
+} from '../../api/api_merchant';
+import { GET_URL_VARIABLES } from '../../api/api_utils';
 
 import moment from 'moment';
 
@@ -46,6 +51,35 @@ class MenuCategory extends PureComponent {
       itemsToInclude: [],
       items: []
     };
+  }
+
+  componentWillMount() {
+    // Need to check for URL param with menu item id.
+    // If we've got one, then query the db, and set state to edit mode..
+    const menuItemId = GET_URL_VARIABLES()['item'];
+
+    if (menuItemId) {
+      // query database for details..
+      GET_MENU_CATEGORY_BY_ID(this.props.user.merchantShopId, menuItemId).then(
+        response => {
+          // set item details to state..
+          // set edit mode to true..
+          console.log('add ons', response.itemsToInclude);
+
+          const itemsToInclude = response.itemsToInclude;
+
+          this.setState({
+            menuItemId: menuItemId,
+            createdOn: response.createdOn,
+            lastUpdated: response.lastUpdated,
+            categoryName: response.categoryName,
+            categoryDescription: response.categoryDescription,
+            editMode: true,
+            itemsToInclude: itemsToInclude ? itemsToInclude : []
+          });
+        }
+      );
+    }
   }
 
   componentDidMount() {
@@ -84,20 +118,32 @@ class MenuCategory extends PureComponent {
   }
 
   saveMenuCategory() {
-
     const createdOn = this.state.createdOn ? this.state.createdOn : Date.now();
-    const { itemName, description, price } = this.state;
 
     const { categoryName, categoryDescription, itemsToInclude } = this.state;
 
     const menuCategoryObj = {
       categoryName,
-      description,
-      price,
+      categoryDescription,
       createdOn,
+      itemsToInclude,
       lastUpdated: Date.now()
     };
 
+    const activeMenuItem = CREATE_MENU_CATEGORY(
+      this.props.user.merchantShopId,
+      this.state.menuItemId,
+      menuCategoryObj
+    );
+
+    this.setState({
+      menuItemId: activeMenuItem.id,
+      createdOn: activeMenuItem.fields.createdOn,
+      lastUpdated: activeMenuItem.fields.lastUpdated,
+      editMode: true
+    });
+
+    message.success('Menu category saved!');
   }
 
   render() {
@@ -105,12 +151,16 @@ class MenuCategory extends PureComponent {
 
     this.state.items &&
       Object.keys(this.state.items).map(item => {
+        const recordCheck = _.find(this.state.itemsToInclude, function(o) {
+          return o.key === item;
+        });
+
         const menuItemObj = {
           key: item,
           name: this.state.items[item].itemName,
-          price: this.state.items[item].price
+          price: this.state.items[item].price,
+          checked: recordCheck ? true : false
         };
-
         data.push(menuItemObj);
       });
 
@@ -120,15 +170,21 @@ class MenuCategory extends PureComponent {
           <AdminActionBar
             action="Save"
             model="Category"
-            backRoute="/merchant/menu"
+            backRoute="/merchant/menu-categories"
+            handleAction={() => this.saveMenuCategory()}
           />
-          <AdminPageTitle title="New Menu Category" />
+
+          <AdminPageTitle
+            title={
+              this.state.editMode ? 'Edit Menu Category' : 'Add Menu Category'
+            }
+          />
           <InputField
             setValue={val => this.setState({ categoryName: val })}
             initialValue={this.state.categoryName}
             labelName="Category name"
           />
-          <TextAreaField
+          <InputField
             setValue={val => this.setState({ categoryDescription: val })}
             initialValue={this.state.categoryDescription}
             labelName="Description"
@@ -143,6 +199,7 @@ class MenuCategory extends PureComponent {
                 key="actions"
                 render={(text, record) => (
                   <Checkbox
+                    defaultChecked={record.checked ? true : false}
                     onChange={e => {
                       this.addMenuItems(record);
                     }}

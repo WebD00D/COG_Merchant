@@ -51,7 +51,54 @@ export const EDIT_MERCHANT = (id, fields) => {
   return currentDate;
 };
 
-export const CREATE_MENU_CATEGORY = (merchantId, categoryId, fields) => {};
+
+export const GET_ALL_MENU_CATEGORIES = merchantId => {
+  return fire
+    .database()
+    .ref(`/merchants/${merchantId}/menu-categories`)
+    .once('value')
+    .then(function(snapshot) {
+      return snapshot.val();
+    });
+}
+
+export const CREATE_MENU_CATEGORY = (merchantId, categoryId, fields) => {
+
+  const itemId = categoryId ? categoryId : createId('MENU-CAT');
+
+  let updates = {};
+  updates[`/merchants/${merchantId}/menu-categories/${itemId}`] = fields;
+  const db = UPDATE_RECORD(updates);
+
+  const newMenuItem = {
+    id: itemId,
+    fields
+  };
+
+  return newMenuItem;
+
+};
+
+
+export const DELETE_MENU_CATEGORY = (merchantId, menuItemId) => {
+  let updates = {};
+  updates[`/merchants/${merchantId}/menu-categories/${menuItemId}`] = null;
+  return fire
+    .database()
+    .ref()
+    .update(updates);
+};
+
+
+export const GET_MENU_CATEGORY_BY_ID = (merchantId, menuItemId) => {
+  return fire
+    .database()
+    .ref(`/merchants/${merchantId}/menu-categories/${menuItemId}`)
+    .once('value')
+    .then(function(snapshot) {
+      return snapshot.val();
+    });
+};
 
 export const CREATE_MENU_ITEM = (merchantId, menuItemId, fields) => {
   const itemId = menuItemId ? menuItemId : createId('MENU-ITEM');

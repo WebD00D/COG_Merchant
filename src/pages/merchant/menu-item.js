@@ -116,7 +116,6 @@ class MenuItem extends PureComponent {
 
     console.log("ITEMS 1", this.state.itemsToInclude)
 
-
     const idx = _.indexOf(this.state.itemsToInclude, recordCheck);
     const items = this.state.itemsToInclude;
 
